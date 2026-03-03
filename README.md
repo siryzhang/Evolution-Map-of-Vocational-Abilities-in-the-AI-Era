@@ -1,7 +1,7 @@
 # AI 时代职业与组织能力演化图谱
 
 > 一张交互式全景图，追踪人类商业文明中职业的诞生、演化、融合与消亡。
-
+https://siryzhang.github.io/Evolution-Map-of-Vocational-Abilities-in-the-AI-Era/
 ---
 
 ## 关于这个项目
@@ -93,12 +93,6 @@ AI时代职业演化全景图谱.html   ~130 KB
 ├── <script> (1)               Section 00 演化图谱逻辑
 └── <script> (2)               Section 01-04 数据与渲染逻辑
 ```
-
----
-
-## 使用方式
-
-点击链接访问：https://siryzhang.github.io/Evolution-Map-of-Vocational-Abilities-in-the-AI-Era/
 
 ---
 
