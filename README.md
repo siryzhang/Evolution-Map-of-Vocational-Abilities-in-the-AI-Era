@@ -2,8 +2,6 @@
 
 > 一张交互式全景图，追踪人类商业文明中职业的诞生、演化、融合与消亡。
 
-**[→ 在线预览](https://your-username.github.io/your-repo-name/AI时代职业演化全景图谱.html)**
-
 ---
 
 ## 关于这个项目
