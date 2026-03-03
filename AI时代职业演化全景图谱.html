@@ -1,0 +1,2911 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI时代职业与组织能力演化图谱</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #07070f;
+  --surface: #0d0d1c;
+  --card: #111124;
+  --card-hover: #161632;
+  --border: rgba(255,255,255,0.07);
+  --border-bright: rgba(255,255,255,0.15);
+  --amber: #f59e0b;
+  --amber-dim: rgba(245,158,11,0.15);
+  --cyan: #22d3ee;
+  --cyan-dim: rgba(34,211,238,0.12);
+  --red: #ef4444;
+  --red-dim: rgba(239,68,68,0.15);
+  --green: #10b981;
+  --green-dim: rgba(16,185,129,0.12);
+  --purple: #a78bfa;
+  --purple-dim: rgba(167,139,250,0.12);
+  --text: #eeeef5;
+  --text-2: #9090b0;
+  --text-3: #55557a;
+  --serif: 'Playfair Display', Georgia, serif;
+  --mono: 'IBM Plex Mono', monospace;
+  --sans: 'IBM Plex Sans', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-weight: 400;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ── NOISE TEXTURE OVERLAY ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  padding: 0 40px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(7,7,15,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--cyan);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.nav-links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+}
+
+.nav-links a {
+  color: var(--text-2);
+  text-decoration: none;
+  font-size: 12px;
+  font-family: var(--mono);
+  letter-spacing: 0.1em;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(--text); }
+
+/* ── HERO ── */
+#hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 120px 80px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-grid-bg {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(34,211,238,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34,211,238,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+}
+
+.hero-glow {
+  position: absolute;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(34,211,238,0.06) 0%, transparent 70%);
+  top: 50%; left: 60%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.hero-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--cyan);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hero-tag::before {
+  content: '';
+  display: block;
+  width: 32px; height: 1px;
+  background: var(--cyan);
+}
+
+h1 {
+  font-family: var(--serif);
+  font-size: clamp(48px, 6vw, 88px);
+  line-height: 1.05;
+  font-weight: 900;
+  max-width: 800px;
+  margin-bottom: 24px;
+}
+
+h1 em {
+  font-style: italic;
+  color: var(--cyan);
+}
+
+.hero-sub {
+  font-size: 16px;
+  color: var(--text-2);
+  max-width: 560px;
+  margin-bottom: 48px;
+  line-height: 1.8;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 48px;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stat-num {
+  font-family: var(--mono);
+  font-size: 28px;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: var(--text-3);
+  letter-spacing: 0.05em;
+}
+
+.scroll-hint {
+  position: absolute;
+  bottom: 40px; left: 80px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-3);
+  letter-spacing: 0.1em;
+}
+
+.scroll-line {
+  width: 40px; height: 1px;
+  background: var(--text-3);
+  animation: scrollAnim 2s ease-in-out infinite;
+}
+
+@keyframes scrollAnim {
+  0%, 100% { width: 20px; opacity: 0.3; }
+  50% { width: 40px; opacity: 1; }
+}
+
+/* ── SECTION BASE ── */
+section {
+  position: relative;
+  padding: 100px 80px;
+}
+
+.section-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-3);
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-family: var(--serif);
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
+
+.section-sub {
+  font-size: 15px;
+  color: var(--text-2);
+  max-width: 600px;
+  line-height: 1.75;
+  margin-bottom: 60px;
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background: var(--border);
+  margin: 0 80px;
+  width: calc(100% - 160px);
+}
+
+/* ── HEAT MAP SECTION ── */
+#heatmap {
+  background: var(--surface);
+}
+
+.heatmap-container {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 40px;
+  align-items: start;
+}
+
+.heatmap-wrap {
+  position: relative;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 40px;
+}
+
+.heatmap-svg {
+  width: 100%;
+  aspect-ratio: 1.2;
+}
+
+/* Quadrant backgrounds */
+.q-tl { fill: rgba(16,185,129,0.04); }
+.q-tr { fill: rgba(245,158,11,0.04); }
+.q-bl { fill: rgba(100,100,150,0.04); }
+.q-br { fill: rgba(239,68,68,0.06); }
+
+.axis-label { fill: #55557a; font-size: 11px; font-family: 'IBM Plex Mono', monospace; }
+.axis-title { fill: #9090b0; font-size: 12px; font-family: 'IBM Plex Mono', monospace; letter-spacing: 0.1em; }
+.grid-line { stroke: rgba(255,255,255,0.04); stroke-width: 1; }
+.quadrant-label { fill: rgba(255,255,255,0.12); font-size: 10px; font-family: 'IBM Plex Mono', monospace; letter-spacing: 0.15em; }
+.center-line { stroke: rgba(255,255,255,0.08); stroke-width: 1; stroke-dasharray: 4 4; }
+
+.job-dot {
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.job-dot circle {
+  transition: all 0.2s;
+}
+
+.job-dot:hover circle {
+  stroke-width: 2;
+  stroke: white;
+}
+
+.job-label {
+  font-size: 9.5px;
+  font-family: 'IBM Plex Mono', monospace;
+  pointer-events: none;
+  fill: rgba(200,200,220,0.75);
+}
+
+/* Tooltip */
+.map-tooltip {
+  position: absolute;
+  background: rgba(20,20,40,0.98);
+  border: 1px solid var(--border-bright);
+  border-radius: 2px;
+  padding: 16px 20px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  min-width: 240px;
+  backdrop-filter: blur(20px);
+  z-index: 100;
+}
+
+.map-tooltip.visible { opacity: 1; }
+
+.tt-name {
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 10px;
+  color: var(--text);
+}
+
+.tt-row {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-2);
+  margin-bottom: 4px;
+}
+
+.tt-val { color: var(--text); }
+
+/* Heatmap sidebar */
+.heatmap-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.legend-title {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-3);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.legend-quadrant {
+  padding: 16px;
+  border-radius: 2px;
+  border-left: 2px solid;
+  cursor: default;
+}
+
+.lq-green { background: var(--green-dim); border-color: var(--green); }
+.lq-amber { background: var(--amber-dim); border-color: var(--amber); }
+.lq-red { background: var(--red-dim); border-color: var(--red); }
+.lq-purple { background: var(--purple-dim); border-color: var(--purple); }
+
+.lq-name {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.lq-desc {
+  font-size: 12px;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+.heatmap-filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.filter-btn {
+  padding: 6px 14px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-2);
+  cursor: pointer;
+  transition: all 0.2s;
+  border-radius: 1px;
+}
+
+.filter-btn:hover, .filter-btn.active {
+  background: var(--cyan-dim);
+  border-color: var(--cyan);
+  color: var(--cyan);
+}
+
+/* ── JOB BREAKDOWN SECTION ── */
+#jobs {
+  background: var(--bg);
+}
+
+.jobs-controls {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.risk-filter {
+  padding: 8px 20px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-2);
+  cursor: pointer;
+  transition: all 0.2s;
+  border-radius: 1px;
+}
+
+.risk-filter.active-all { border-color: var(--text-2); color: var(--text); }
+.risk-filter.active-high { border-color: var(--red); color: var(--red); background: var(--red-dim); }
+.risk-filter.active-med { border-color: var(--amber); color: var(--amber); background: var(--amber-dim); }
+.risk-filter.active-low { border-color: var(--green); color: var(--green); background: var(--green-dim); }
+.risk-filter.active-new { border-color: var(--cyan); color: var(--cyan); background: var(--cyan-dim); }
+
+.jobs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1px;
+  background: var(--border);
+}
+
+.job-card {
+  background: var(--card);
+  padding: 28px;
+  cursor: pointer;
+  transition: background 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.job-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px; height: 100%;
+  transition: height 0.3s;
+}
+
+.job-card.risk-high::before { background: var(--red); }
+.job-card.risk-med::before { background: var(--amber); }
+.job-card.risk-low::before { background: var(--green); }
+.job-card.risk-new::before { background: var(--cyan); }
+
+.job-card:hover { background: var(--card-hover); }
+
+.job-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.job-name {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.risk-badge {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  padding: 3px 8px;
+  border-radius: 1px;
+  white-space: nowrap;
+}
+
+.badge-high { background: var(--red-dim); color: var(--red); border: 1px solid rgba(239,68,68,0.3); }
+.badge-med { background: var(--amber-dim); color: var(--amber); border: 1px solid rgba(245,158,11,0.3); }
+.badge-low { background: var(--green-dim); color: var(--green); border: 1px solid rgba(16,185,129,0.3); }
+.badge-new { background: var(--cyan-dim); color: var(--cyan); border: 1px solid rgba(34,211,238,0.3); }
+
+.threat-bar-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.bar-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text-3);
+  width: 52px;
+  flex-shrink: 0;
+  letter-spacing: 0.05em;
+}
+
+.bar-track {
+  flex: 1;
+  height: 3px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.6s cubic-bezier(0.4,0,0.2,1);
+}
+
+.bar-threat { background: var(--red); }
+.bar-augment { background: var(--cyan); }
+
+.bar-val {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-2);
+  width: 20px;
+  text-align: right;
+}
+
+.job-card-foot {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.job-industry {
+  font-size: 11px;
+  color: var(--text-3);
+  font-family: var(--mono);
+}
+
+.expand-hint {
+  font-size: 10px;
+  color: var(--text-3);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ── JOB DETAIL PANEL ── */
+.job-detail-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(7,7,15,0.85);
+  z-index: 500;
+  display: flex;
+  justify-content: flex-end;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+  backdrop-filter: blur(4px);
+}
+
+.job-detail-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.job-detail-panel {
+  width: min(680px, 90vw);
+  height: 100vh;
+  background: var(--surface);
+  border-left: 1px solid var(--border-bright);
+  overflow-y: auto;
+  padding: 48px 40px;
+  transform: translateX(100%);
+  transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+}
+
+.job-detail-overlay.open .job-detail-panel {
+  transform: translateX(0);
+}
+
+.panel-close {
+  position: absolute;
+  top: 24px; right: 24px;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-2);
+  width: 32px; height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.2s;
+}
+
+.panel-close:hover { border-color: var(--text); color: var(--text); }
+
+.panel-tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-3);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.panel-title {
+  font-family: var(--serif);
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.panel-subtitle {
+  font-size: 13px;
+  color: var(--text-2);
+  margin-bottom: 32px;
+  font-family: var(--mono);
+}
+
+.hexgrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  margin-bottom: 32px;
+}
+
+.hex-cell {
+  background: var(--card);
+  padding: 20px;
+}
+
+.hex-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text-3);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hex-icon { font-size: 12px; }
+
+.hex-content {
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.65;
+}
+
+.hex-content ul {
+  padding-left: 14px;
+}
+
+.hex-content li {
+  margin-bottom: 4px;
+}
+
+.hex-content strong { color: var(--text); }
+
+.timeline-preview {
+  background: var(--card);
+  padding: 24px;
+  border: 1px solid var(--border);
+  margin-bottom: 24px;
+}
+
+.timeline-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-3);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.timeline-track {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.timeline-point {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.tp-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  border: 2px solid;
+  background: var(--bg);
+  position: relative;
+  z-index: 1;
+  margin-bottom: 8px;
+}
+
+.tp-year {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-3);
+  margin-bottom: 4px;
+}
+
+.tp-desc {
+  font-size: 11px;
+  color: var(--text-2);
+  text-align: center;
+  line-height: 1.4;
+}
+
+.timeline-line {
+  flex: 1;
+  height: 1px;
+  background: var(--border-bright);
+  margin-top: -18px;
+}
+
+/* ── CAREER PATHS SECTION ── */
+#paths {
+  background: var(--surface);
+}
+
+.paths-tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 48px;
+  border-bottom: 1px solid var(--border);
+}
+
+.path-tab {
+  padding: 14px 28px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--text-2);
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: -1px;
+}
+
+.path-tab.active {
+  color: var(--cyan);
+  border-bottom-color: var(--cyan);
+}
+
+.path-content { display: none; }
+.path-content.active { display: block; }
+
+.path-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  margin-bottom: 32px;
+}
+
+.path-meta {
+  background: var(--card);
+  padding: 20px 24px;
+}
+
+.pm-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-3);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.pm-value {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.roadmap {
+  position: relative;
+  padding-left: 32px;
+}
+
+.roadmap::before {
+  content: '';
+  position: absolute;
+  left: 8px; top: 6px; bottom: 6px;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--cyan), var(--purple));
+}
+
+.roadmap-step {
+  position: relative;
+  margin-bottom: 40px;
+}
+
+.roadmap-step::before {
+  content: '';
+  position: absolute;
+  left: -26px; top: 6px;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 2px solid var(--cyan);
+}
+
+.rs-phase {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--cyan);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.rs-title {
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.rs-desc {
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.65;
+  margin-bottom: 12px;
+}
+
+.rs-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.action-chip {
+  padding: 4px 12px;
+  font-family: var(--mono);
+  font-size: 10px;
+  background: var(--cyan-dim);
+  border: 1px solid rgba(34,211,238,0.2);
+  color: var(--cyan);
+  border-radius: 1px;
+}
+
+/* Radar chart */
+.radar-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+  margin-bottom: 48px;
+}
+
+canvas#radarChart {
+  max-width: 100%;
+}
+
+.radar-skills {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.radar-skill-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.rsr-label {
+  width: 120px;
+  font-size: 12px;
+  color: var(--text-2);
+  flex-shrink: 0;
+}
+
+.rsr-bar {
+  flex: 1;
+  height: 2px;
+  background: rgba(255,255,255,0.06);
+}
+
+.rsr-fill {
+  height: 100%;
+  background: var(--cyan);
+  transition: width 0.6s;
+}
+
+.rsr-val {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-2);
+  width: 28px;
+  text-align: right;
+}
+
+/* ── ORG TOOLKIT ── */
+#org {
+  background: var(--bg);
+}
+
+.toolkit-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  margin-bottom: 60px;
+}
+
+.tool-card {
+  background: var(--card);
+  padding: 32px;
+}
+
+.tool-icon {
+  font-size: 24px;
+  margin-bottom: 16px;
+}
+
+.tool-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.tool-desc {
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.tool-items {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tool-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text-2);
+}
+
+.tool-item::before {
+  content: '›';
+  color: var(--cyan);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* Org structure viz */
+.org-transform {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 32px;
+  align-items: center;
+  margin-bottom: 60px;
+}
+
+.org-before, .org-after {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 24px;
+}
+
+.org-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.org-label.before { color: var(--red); }
+.org-label.after { color: var(--green); }
+
+.org-arrow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: var(--text-3);
+  font-size: 24px;
+}
+
+.org-arrow small {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+}
+
+/* Case studies */
+.cases-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+}
+
+.case-card {
+  background: var(--card);
+  padding: 32px;
+}
+
+.case-type {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.case-type.success { color: var(--green); }
+.case-type.failure { color: var(--red); }
+
+.case-company {
+  font-size: 20px;
+  font-weight: 700;
+  font-family: var(--serif);
+  margin-bottom: 4px;
+}
+
+.case-tagline {
+  font-size: 12px;
+  color: var(--text-2);
+  margin-bottom: 20px;
+  font-style: italic;
+}
+
+.case-details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.case-row {
+  display: flex;
+  gap: 12px;
+  font-size: 13px;
+}
+
+.case-row-label {
+  color: var(--text-3);
+  width: 60px;
+  flex-shrink: 0;
+  font-family: var(--mono);
+  font-size: 11px;
+  padding-top: 1px;
+}
+
+.case-row-val {
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+/* ── FOOTER ── */
+footer {
+  padding: 48px 80px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-note {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-3);
+}
+
+.version-tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-3);
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 4px 12px;
+  border-radius: 1px;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-up {
+  animation: fadeUp 0.7s cubic-bezier(0.4,0,0.2,1) both;
+}
+
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border-bright); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  section, #hero { padding: 60px 24px; }
+  .heatmap-container { grid-template-columns: 1fr; }
+  .toolkit-grid { grid-template-columns: 1fr; }
+  .cases-grid { grid-template-columns: 1fr; }
+  .radar-wrap { grid-template-columns: 1fr; }
+  .org-transform { grid-template-columns: 1fr; }
+  nav { padding: 0 24px; }
+  .nav-links { display: none; }
+  h1 { font-size: 40px; }
+  footer { flex-direction: column; gap: 16px; }
+}
+
+
+
+/* ══════════════════════════════════════════════
+   SECTION 00: 四个时代职业流变 · v3 三层结构
+   (核心业务 / 职能支持 / 其他领域)
+   ══════════════════════════════════════════════ */
+#evolution { overflow:hidden; background:var(--surface); padding:0; }
+#evolution .pw { padding:56px 80px 0; }
+#evolution .eyebrow { font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--text-3);display:flex;align-items:center;gap:10px;margin-bottom:14px; }
+#evolution .eyebrow::before { content:'';width:24px;height:1px;background:#22d3ee;opacity:.6; }
+#evolution .sub { font-size:13px;color:var(--text-2);line-height:1.8;max-width:680px;margin-bottom:10px; }
+#evolution .logic-note { font-size:11px;color:var(--text-3);line-height:1.65;max-width:760px;padding:14px 18px;border:1px solid var(--border);background:rgba(255,255,255,0.015);margin-bottom:30px; }
+#evolution .logic-note strong { color:var(--text-2); }
+.leg-row { display:flex;align-items:center;gap:4px;padding:0 80px 26px;flex-wrap:wrap; }
+.lb { display:flex;align-items:center;gap:7px;padding:6px 13px;border:1px solid var(--border);background:transparent;color:var(--text-2);cursor:pointer;font:10.5px var(--mono);letter-spacing:.07em;transition:all .2s;white-space:nowrap; }
+.lb:hover,.lb.on { color:var(--text);background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.15); }
+.ll { width:20px;height:2px;flex-shrink:0; }
+.ld { background:repeating-linear-gradient(90deg,currentColor 0,currentColor 4px,transparent 4px,transparent 7px); }
+.ls { width:1px;height:22px;background:var(--border);margin:0 3px; }
+.lg { display:flex;align-items:center;gap:5px;padding:6px 13px;font:10.5px var(--mono);color:var(--text-3); }
+.do { padding:0 60px 40px;overflow-x:auto; }
+.do::-webkit-scrollbar { height:3px; }
+.do::-webkit-scrollbar-thumb { background:rgba(255,255,255,.08); }
+#es { display:block;min-width:1300px;opacity:0;transition:opacity .5s; }
+#es.on { opacity:1; }
+#es .cn { cursor:pointer; }
+#es .cn rect.nb { transition:fill .15s,stroke-opacity .15s; }
+#es .cn:hover rect.nb { fill:rgba(255,255,255,.08)!important;stroke-opacity:1!important; }
+#es .ep { transition:stroke-opacity .18s,stroke-width .18s; }
+#es .ep.dim { stroke-opacity:.022!important; }
+#es .ep.lit { stroke-opacity:.95!important;stroke-width:3px!important; }
+#es .cn.dim rect.nb { fill-opacity:.07!important; }
+#es .cn.dim text { fill-opacity:.1; }
+#es .cn.lit rect.nb { fill:rgba(255,255,255,.08)!important;stroke-opacity:1!important; }
+#tt { position:fixed;background:rgba(8,8,20,.97);border:1px solid rgba(255,255,255,.14);padding:16px 20px;pointer-events:none;opacity:0;transition:opacity .12s;z-index:999;min-width:240px;max-width:330px;backdrop-filter:blur(20px); }
+#tt.on { opacity:1; }
+#tt-n { font-family:var(--serif);font-size:17px;font-weight:700;margin-bottom:3px; }
+#tt-et { font-size:9px;letter-spacing:.14em;margin-bottom:10px;opacity:.55; }
+.tr { margin-bottom:8px; }
+.tl { font-size:9px;letter-spacing:.12em;color:var(--text-3);text-transform:uppercase;margin-bottom:2px; }
+.tv { font-size:12px;color:var(--text-2);line-height:1.55;white-space:pre-line; }
+.tc { margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.06); }
+.tc-lbl { font-size:9px;letter-spacing:.12em;color:var(--text-3);text-transform:uppercase;margin-bottom:5px; }
+.tc-v { font-size:11px;color:var(--text-2);line-height:1.8; }
+.sr { display:flex;padding:0 80px;margin-bottom:8px; }
+.sb { flex:1;border:1px solid var(--border);padding:14px 18px; }
+.sb+.sb { border-left:none; }
+.sb-t { font-size:9.5px;letter-spacing:.12em;color:var(--text-3);text-transform:uppercase;margin-bottom:8px; }
+.sn-row { display:flex;gap:12px;flex-wrap:wrap; }
+.sn { display:flex;align-items:baseline;gap:4px; }
+.sv { font-size:18px;font-weight:500;line-height:1; }
+.sl { font-size:9px;color:var(--text-3); }
+.ef { padding:18px 80px 56px;display:flex;justify-content:space-between;align-items:flex-end;border-top:1px solid var(--border); }
+.ef-note { font-size:11px;color:var(--text-3);line-height:1.65;max-width:580px; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">AI / CAREER / ATLAS · 2024</div>
+  <ul class="nav-links">
+    <li><a href="#evolution">文明演化</a></li>
+    <li><a href="#heatmap">热力图</a></li>
+    <li><a href="#jobs">职位拆解</a></li>
+    <li><a href="#paths">进化路线</a></li>
+    <li><a href="#org">组织工具箱</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-tag fade-up">AI时代生存图谱 · 文明演化全景版</div>
+  <h1 class="fade-up delay-1">职业与组织<br><em>能力演化</em>图谱</h1>
+  <p class="hero-sub fade-up delay-2">覆盖 25 个核心职位的完整拆解，个人进化三条路径，以及给组织设计者的工具箱。这不是预言，是行动框架。</p>
+  <div class="hero-stats fade-up delay-3">
+    <div class="stat">
+      <span class="stat-num">25</span>
+      <span class="stat-label">职位深度拆解</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">3</span>
+      <span class="stat-label">个人进化路径</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">4</span>
+      <span class="stat-label">组织设计工具</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">6</span>
+      <span class="stat-label">转型案例</span>
+    </div>
+  </div>
+  <div class="scroll-hint fade-up delay-4">
+    <div class="scroll-line"></div>
+    SCROLL TO EXPLORE
+  </div>
+</section>
+
+
+
+
+<!-- ══════════════════════════════════
+  SECTION 00: 四个时代职业流变 v3
+════════════════════════════════════ -->
+<section id="evolution">
+<div class="pw">
+  <div class="eyebrow">文明发展全景图 · Section 00 · Prologue</div>
+  <h1>四个时代的<br><em>职业流变</em></h1>
+  <p class="sub">每个时代锚定一家代表性企业，完整呈现其「核心业务团队 + 职能支持团队」，再辅以各领域典型职业，立体还原商业组织的演化全貌。</p>
+  <div class="logic-note">
+    <strong>锚定逻辑：</strong>
+    农业时代 · <strong>丝绸之路商行</strong>（唐宋商业原型）→
+    工业时代 · <strong>福特汽车</strong>（1910s 流水线制造）→
+    信息时代 · <strong>谷歌</strong>（2005 科技平台原型）→
+    AI时代 · <strong>AI 原生公司</strong>（2023+ Anthropic 类型）<br>
+    每个时代商业团队分三层：<span style="color:#f0b429">▌ 核心业务</span>（产品·销售·技术执行）·
+    <span style="color:#a78bfa">◆ 职能支持</span>（财务·人事·法务·行政）·
+    <span style="color:#6b7280">— 其他领域</span>（医生·教师·军人等跨时代锚点）。
+    悬停任意职位查看完整跨时代演化轨迹。
+  </div>
+</div>
+
+<div class="leg-row">
+  <button class="lb on" data-ef="all">全部</button>
+  <div class="ls"></div>
+  <button class="lb" data-ef="continue"><div class="ll" style="background:#22d3ee"></div>延续</button>
+  <button class="lb" data-ef="evolve"><div class="ll" style="background:#f59e0b"></div>升级迭代</button>
+  <button class="lb" data-ef="transform"><div class="ll ld" style="color:#c084fc"></div>转型融合</button>
+  <button class="lb" data-ef="disappear"><div class="ll ld" style="color:#f87171"></div>消亡</button>
+  <button class="lb" data-ef="new"><span style="color:#10b981;font-size:11px">✦</span>新兴职位</button>
+  <div class="ls"></div>
+  <div class="lg"><span style="color:#f0b429">▌</span>核心业务</div>
+  <div class="lg"><span style="color:#a78bfa">◆</span>职能支持</div>
+  <div class="lg"><span style="color:#6b7280">—</span>其他领域</div>
+</div>
+
+<div class="do">
+  <svg id="es" viewBox="0 0 1300 1220" xmlns="http://www.w3.org/2000/svg"></svg>
+</div>
+
+<div class="sr" id="sr"></div>
+
+<div id="tt">
+  <div id="tt-n"></div>
+  <div id="tt-et"></div>
+  <div class="tr"><div class="tl">历史注解</div><div class="tv" id="tt-note"></div></div>
+  <div class="tr"><div class="tl">演化去向</div><div class="tv" id="tt-to"></div></div>
+  <div class="tc">
+    <div class="tc-lbl">完整演化轨迹</div>
+    <div class="tc-v" id="tt-chain"></div>
+  </div>
+</div>
+
+<div class="ef">
+  <div class="ef-note">
+    悬停任意职位 → 高亮完整跨时代演化轨迹并显示详情。
+    <span style="color:#22d3ee">青色</span> 延续 ·
+    <span style="color:#f59e0b">琥珀</span> 升级迭代 ·
+    <span style="color:#a78bfa">紫色虚线</span> 转型融合 ·
+    <span style="color:#f87171">红色→✕</span> 消亡 ·
+    <span style="color:#10b981">✦</span> 新兴职位
+  </div>
+  <div style="font-size:10px;color:var(--text-3);text-align:right">SECTION 00 · 2025</div>
+</div>
+</section>
+
+<!-- evo tooltip -->
+<div id="tt">
+  <div id="tt-n"></div>
+  <div id="tt-et"></div>
+  <div class="tr"><div class="tl">历史注解</div><div class="tv" id="tt-note"></div></div>
+  <div class="tr"><div class="tl">演化去向</div><div class="tv" id="tt-to"></div></div>
+  <div class="tc">
+    <div class="tc-lbl">完整演化轨迹</div>
+    <div class="tc-v" id="tt-chain"></div>
+  </div>
+</div>
+
+
+<div class="divider"></div>
+
+<!-- HEATMAP -->
+<section id="heatmap">
+  <div class="section-label">SECTION 01</div>
+  <div class="section-title">AI冲击全景<em style="font-style:italic;color:var(--cyan)">热力图</em></div>
+  <p class="section-sub">每个职位按「替代威胁」×「增强潜力」两轴定位。找到你的坐标，再决定策略。</p>
+
+  <div class="heatmap-filters">
+    <button class="filter-btn active" data-filter="all">全部职位</button>
+    <button class="filter-btn" data-filter="marketing">市场 / 创意</button>
+    <button class="filter-btn" data-filter="tech">技术 / 产品</button>
+    <button class="filter-btn" data-filter="finance">财务 / 风控</button>
+    <button class="filter-btn" data-filter="ops">运营 / 管理</button>
+    <button class="filter-btn" data-filter="new">新兴职位</button>
+  </div>
+
+  <div class="heatmap-container">
+    <div class="heatmap-wrap">
+      <svg id="heatmapSvg" class="heatmap-svg" viewBox="0 0 620 520" xmlns="http://www.w3.org/2000/svg"></svg>
+      <div class="map-tooltip" id="mapTooltip">
+        <div class="tt-name" id="ttName"></div>
+        <div class="tt-row"><span>替代威胁</span><span class="tt-val" id="ttThreat"></span></div>
+        <div class="tt-row"><span>增强潜力</span><span class="tt-val" id="ttAugment"></span></div>
+        <div class="tt-row"><span>3年展望</span><span class="tt-val" id="ttOutlook"></span></div>
+      </div>
+    </div>
+
+    <div class="heatmap-legend">
+      <div class="legend-title">象限解读</div>
+      <div class="legend-quadrant lq-green">
+        <div class="lq-name">🟢 核心价值区</div>
+        <div class="lq-desc">低替代 · 高增强<br>人机协作最强区，AI 让你更强而不是替代你</div>
+      </div>
+      <div class="legend-quadrant lq-amber">
+        <div class="lq-name">🟡 转型机会区</div>
+        <div class="lq-desc">高替代 · 高增强<br>威胁与机遇并存，掌握 AI 工具即可逆势突围</div>
+      </div>
+      <div class="legend-quadrant lq-purple">
+        <div class="lq-name">🟣 稳定进化区</div>
+        <div class="lq-desc">低替代 · 低增强<br>AI 渗透较慢，但护城河也较窄</div>
+      </div>
+      <div class="legend-quadrant lq-red">
+        <div class="lq-name">🔴 高危重构区</div>
+        <div class="lq-desc">高替代 · 低增强<br>大量任务被 AI 接管，必须主动转型</div>
+      </div>
+      <div style="margin-top: 8px;">
+        <div class="legend-title" style="margin-bottom: 10px;">泡泡大小 = 当前市场需求</div>
+        <div style="font-size: 12px; color: var(--text-2); line-height: 1.6;">点击任意职位泡泡，可在右侧「职位拆解」区查看完整六面体分析。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- JOBS -->
+<section id="jobs">
+  <div class="section-label">SECTION 02</div>
+  <div class="section-title">职位深度<em style="font-style:italic;color:var(--amber)">拆解</em></div>
+  <p class="section-sub">每个职位用「六面体模型」解剖：核心任务 → 已被替代 → 人类护城河 → 新能力要求 → 未来形态 → 薪资走势。点击卡片展开详情。</p>
+
+  <div class="jobs-controls">
+    <button class="risk-filter active-all" data-risk="all">全部</button>
+    <button class="risk-filter" data-risk="high">🔴 高危</button>
+    <button class="risk-filter" data-risk="med">🟡 转型</button>
+    <button class="risk-filter" data-risk="low">🟢 价值</button>
+    <button class="risk-filter" data-risk="new">✦ 新兴</button>
+  </div>
+
+  <div class="jobs-grid" id="jobsGrid"></div>
+</section>
+
+<!-- JOB DETAIL PANEL -->
+<div class="job-detail-overlay" id="jobDetailOverlay">
+  <div class="job-detail-panel" id="jobDetailPanel">
+    <button class="panel-close" id="panelClose">✕</button>
+    <div id="panelContent"></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- CAREER PATHS -->
+<section id="paths">
+  <div class="section-label">SECTION 03</div>
+  <div class="section-title">个人进化<em style="font-style:italic;color:var(--purple)">路线图</em></div>
+  <p class="section-sub">不同起点 × 不同风险偏好，三条路径任选其一——或组合使用。每条路径都有具体的里程碑和行动清单。</p>
+
+  <div class="paths-tabs">
+    <button class="path-tab active" data-path="0">🛡️ 防守型 · 稳中求进</button>
+    <button class="path-tab" data-path="1">⚡ 进攻型 · 主动拥抱</button>
+    <button class="path-tab" data-path="2">🚀 跨越型 · 赛道重构</button>
+  </div>
+
+  <div id="pathContents"></div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ORG TOOLKIT -->
+<section id="org">
+  <div class="section-label">SECTION 04</div>
+  <div class="section-title">组织设计者<em style="font-style:italic;color:var(--green)">工具箱</em></div>
+  <p class="section-sub">从 HR 与领导者视角出发，提供岗位重设计、人机协作工作流、组织结构演化三套框架，配合六个真实转型案例。</p>
+
+  <div class="toolkit-grid">
+    <div class="tool-card">
+      <div class="tool-icon">🔬</div>
+      <div class="tool-title">岗位重设计模板</div>
+      <div class="tool-desc">用于评估现有岗位，拆解「AI可做」与「人类必做」，重新定义 JD 和 KPI。</div>
+      <div class="tool-items">
+        <div class="tool-item">任务分解矩阵：自动化 / 增强 / 核心人类</div>
+        <div class="tool-item">新 JD 撰写模板（含 AI 能力要求）</div>
+        <div class="tool-item">KPI 重构：效率指标 + 创造力指标</div>
+        <div class="tool-item">过渡期支持计划（培训路径）</div>
+      </div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-icon">⚙️</div>
+      <div class="tool-title">人机协作工作流设计</div>
+      <div class="tool-desc">将 AI 工具嵌入现有工作流，识别最高价值的「人机接口」，避免技术堆砌。</div>
+      <div class="tool-items">
+        <div class="tool-item">工作流扫描：找出 AI 可介入的节点</div>
+        <div class="tool-item">接口设计：人类决策 vs AI 执行边界</div>
+        <div class="tool-item">质检机制：如何验证 AI 输出质量</div>
+        <div class="tool-item">反馈循环：持续优化人机分工</div>
+      </div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-icon">🏗️</div>
+      <div class="tool-title">组织结构演化路线</div>
+      <div class="tool-desc">从传统层级制 → AI 增强扁平化，分三个演化阶段，每阶段都有清晰的触发条件。</div>
+      <div class="tool-items">
+        <div class="tool-item">阶段 1：AI 辅助（现有结构 + AI 工具）</div>
+        <div class="tool-item">阶段 2：AI 增强（流程重构 + 角色合并）</div>
+        <div class="tool-item">阶段 3：AI 原生（新型扁平 + 动态团队）</div>
+        <div class="tool-item">评估量表：所处阶段诊断工具</div>
+      </div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-icon">📊</div>
+      <div class="tool-title">AI 能力成熟度评估</div>
+      <div class="tool-desc">5 维度量表，评估团队和组织当前 AI 整合深度，生成行动优先级建议。</div>
+      <div class="tool-items">
+        <div class="tool-item">工具使用 · 流程融合 · 文化接受度</div>
+        <div class="tool-item">数据基础 · 治理机制</div>
+        <div class="tool-item">分级诊断：探索期 / 整合期 / 引领期</div>
+        <div class="tool-item">90天行动计划生成逻辑</div>
+      </div>
+    </div>
+    <div class="tool-card" style="grid-column: span 2;">
+      <div class="tool-icon">🔄</div>
+      <div class="tool-title">组织结构演化示意</div>
+      <div class="org-transform" style="margin-top: 20px; margin-bottom: 0;">
+        <div class="org-before">
+          <div class="org-label before">传统层级制 · 2020</div>
+          <div style="font-size: 12px; color: var(--text-2); line-height: 1.8;">
+            CEO → 3层VP → N个总监 → N²个经理 → N³名执行员<br><br>
+            <span style="color: var(--red);">问题：</span>决策链过长 / 信息损耗严重 / 人力成本高 / 响应速度慢
+          </div>
+        </div>
+        <div class="org-arrow">
+          <span>→</span>
+          <small>AI 驱动</small>
+        </div>
+        <div class="org-after">
+          <div class="org-label after">AI 原生扁平化 · 2026+</div>
+          <div style="font-size: 12px; color: var(--text-2); line-height: 1.8;">
+            核心决策团队 → AI系统层 → 动态项目小队（人机混合）<br><br>
+            <span style="color: var(--green);">优势：</span>AI 承担信息汇总与分析 / 人类聚焦决策与创造 / 组织更灵活
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CASES -->
+  <div style="margin-bottom: 32px;">
+    <div class="section-label">CASE STUDIES</div>
+    <div style="font-size: 22px; font-family: var(--serif); font-weight: 700; margin-bottom: 8px;">典型转型案例</div>
+    <p style="font-size: 14px; color: var(--text-2); margin-bottom: 32px;">成功与失败各三个，提炼可复制的模式与应该避开的陷阱。</p>
+  </div>
+
+  <div class="cases-grid">
+    <div class="case-card">
+      <div class="case-type success">✓ 成功案例</div>
+      <div class="case-company">Klarna</div>
+      <div class="case-tagline">将 AI 作为组织再设计的驱动力，而非成本削减工具</div>
+      <div class="case-details">
+        <div class="case-row"><span class="case-row-label">背景</span><span class="case-row-val">欧洲最大先买后付公司，2023年启动 AI 优先战略</span></div>
+        <div class="case-row"><span class="case-row-label">策略</span><span class="case-row-val">AI 客服替代 700 名客服，但将节省资金用于提升剩余员工薪资和再培训</span></div>
+        <div class="case-row"><span class="case-row-label">结果</span><span class="case-row-val">客户满意度持平，人均产出提升 40%，运营成本降低 20%</span></div>
+        <div class="case-row"><span class="case-row-label">关键</span><span class="case-row-val" style="color: var(--green);">人与 AI 重新分工，而非简单裁员；赢得了留任员工的信任</span></div>
+      </div>
+    </div>
+    <div class="case-card">
+      <div class="case-type success">✓ 成功案例</div>
+      <div class="case-company">Duolingo</div>
+      <div class="case-tagline">AI 驱动内容生产，释放人类专注用户体验创新</div>
+      <div class="case-details">
+        <div class="case-row"><span class="case-row-label">背景</span><span class="case-row-val">语言学习平台，课程内容生产是核心瓶颈</span></div>
+        <div class="case-row"><span class="case-row-label">策略</span><span class="case-row-val">GPT-4 驱动内容生成，内容设计师转型为「AI 内容编导」角色</span></div>
+        <div class="case-row"><span class="case-row-label">结果</span><span class="case-row-val">新语言课程发布速度提升 10x，内容设计团队规模不减反增</span></div>
+        <div class="case-row"><span class="case-row-label">关键</span><span class="case-row-val" style="color: var(--green);">提前与员工沟通角色变化，并提供充分工具培训</span></div>
+      </div>
+    </div>
+    <div class="case-card">
+      <div class="case-type success">✓ 成功案例</div>
+      <div class="case-company">BCG</div>
+      <div class="case-tagline">咨询行业的 AI 增强实验，人机协作 vs 纯人类的对比</div>
+      <div class="case-details">
+        <div class="case-row"><span class="case-row-label">背景</span><span class="case-row-val">麻省理工联合研究：让顾问使用 GPT-4 完成真实项目任务</span></div>
+        <div class="case-row"><span class="case-row-label">策略</span><span class="case-row-val">分组对比，AI 组完成更多任务、速度更快、质量更高</span></div>
+        <div class="case-row"><span class="case-row-label">结果</span><span class="case-row-val">使用 AI 的顾问产出质量提升 40%，完成速度快 25%</span></div>
+        <div class="case-row"><span class="case-row-label">关键</span><span class="case-row-val" style="color: var(--green);">AI 在「创意型」任务上帮助最大，在「判断型」任务上风险最高</span></div>
+      </div>
+    </div>
+    <div class="case-card">
+      <div class="case-type failure">✕ 失败案例</div>
+      <div class="case-company">某媒体集团</div>
+      <div class="case-tagline">AI 写作替代记者，公关危机重创品牌</div>
+      <div class="case-details">
+        <div class="case-row"><span class="case-row-label">背景</span><span class="case-row-val">北美科技媒体，2023年用 AI 自动生成财经文章并悄悄发布</span></div>
+        <div class="case-row"><span class="case-row-label">问题</span><span class="case-row-val">AI 文章含有大量事实错误，未经任何人工审核即发布</span></div>
+        <div class="case-row"><span class="case-row-label">结果</span><span class="case-row-val">大规模道歉、暂停 AI 生成、品牌公信力严重受损</span></div>
+        <div class="case-row"><span class="case-row-label">教训</span><span class="case-row-val" style="color: var(--red);">把 AI 当替代品而非工具，且缺少人类审核环节</span></div>
+      </div>
+    </div>
+    <div class="case-card">
+      <div class="case-type failure">✕ 失败案例</div>
+      <div class="case-company">某零售巨头</div>
+      <div class="case-tagline">AI 客服部署失控，导致客户流失</div>
+      <div class="case-details">
+        <div class="case-row"><span class="case-row-label">背景</span><span class="case-row-val">全球连锁零售商，激进部署 AI 客服以削减成本</span></div>
+        <div class="case-row"><span class="case-row-label">问题</span><span class="case-row-val">AI 无法处理复杂投诉，且不允许转接人工，客户陷入死循环</span></div>
+        <div class="case-row"><span class="case-row-label">结果</span><span class="case-row-val">NPS 下降 18 分，社媒差评发酵，Q3 复购率跌 7%</span></div>
+        <div class="case-row"><span class="case-row-label">教训</span><span class="case-row-val" style="color: var(--red);">未设计「人工兜底」机制，AI 边界不清晰</span></div>
+      </div>
+    </div>
+    <div class="case-card">
+      <div class="case-type failure">✕ 失败案例</div>
+      <div class="case-company">某科技独角兽</div>
+      <div class="case-tagline">激进裁员 + AI 替代，工程质量崩塌</div>
+      <div class="case-details">
+        <div class="case-row"><span class="case-row-label">背景</span><span class="case-row-val">硅谷 SaaS 公司，2023年将 60% 工程师替换为 AI 编码</span></div>
+        <div class="case-row"><span class="case-row-label">问题</span><span class="case-row-val">AI 生成代码积累了大量技术债，缺乏有经验的工程师做架构把控</span></div>
+        <div class="case-row"><span class="case-row-label">结果</span><span class="case-row-val">产品稳定性下降，重新招募高级工程师，成本反而更高</span></div>
+        <div class="case-row"><span class="case-row-label">教训</span><span class="case-row-val" style="color: var(--red);">AI 能写代码，但不能替代架构思维和系统判断力</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-note">AI时代职业与组织能力演化图谱 · 持续迭代中 · 数据基于2024年研究</div>
+  <div class="version-tag">VERSION 1.0 · 2024</div>
+</footer>
+
+<script>
+// ══════════════════════════════════════════════════════════════
+// ERAS
+// ══════════════════════════════════════════════════════════════
+const ERAS = [
+  {id:'agri',  name:'农业时代',  period:'BC 3000—1760s', co:'丝绸之路商行', coD:'唐宋商业原型', accent:'#d97706', bg:'rgba(120,53,15,0.09)'},
+  {id:'indus', name:'工业时代',  period:'1760s—1970s',   co:'福特汽车公司', coD:'1910s 流水线制造', accent:'#9ca3af', bg:'rgba(55,65,81,0.09)'},
+  {id:'info',  name:'信息时代',  period:'1970s—2020',    co:'谷歌',         coD:'2005 科技平台原型', accent:'#60a5fa', bg:'rgba(30,58,138,0.10)'},
+  {id:'ai',    name:'AI 时代',   period:'2020—?',        co:'AI 原生公司',  coD:'2023+ Anthropic 类型', accent:'#22d3ee', bg:'rgba(4,47,46,0.12)'}
+];
+
+// g: 'biz'=核心业务  'func'=职能支持  'other'=其他领域
+const CAREERS = [
+  // ══════════════ 农业时代 · 丝绸之路商行 ══════════════
+  // 核心业务
+  {id:'ag_own', era:'agri',  g:'biz',  name:'东家',       slot:0, note:'商行所有者，资本与权威的人格化，所有重大决策最终归属'},
+  {id:'ag_mgr', era:'agri',  g:'biz',  name:'掌柜',       slot:1, note:'总管日常运营：账目·人员·货物·客户关系，古代总经理'},
+  {id:'ag_trd', era:'agri',  g:'biz',  name:'行商·采购',  slot:2, note:'外出走货谈判，连接产地与市场，最早的供应链角色'},
+  {id:'ag_clk', era:'agri',  g:'biz',  name:'伙计·学徒',  slot:3, note:'门店执行者，从打杂到习艺，商行的基层劳动力'},
+  // 职能支持
+  {id:'ag_acc', era:'agri',  g:'func', name:'账房先生',   slot:0, note:'记录资金进出·核算盈亏·管理账册，古代财务总监'},
+  {id:'ag_kud', era:'agri',  g:'func', name:'库丁·仓管',  slot:1, note:'货物出入库登记·防损防盗·仓储调配，原始物流职能'},
+  {id:'ag_grd', era:'agri',  g:'func', name:'护卫头领',   slot:2, note:'保护商队与货物安全，处理纠纷，原始风控与法务职能'},
+  // 其他领域
+  {id:'ag_frm', era:'agri',  g:'other',name:'农民',       slot:0, note:'帝国食物链的根基，征税对象，沉默的大多数'},
+  {id:'ag_smt', era:'agri',  g:'other',name:'铁匠',       slot:1, note:'金属加工者，工具与武器的制造，工业的雏形'},
+  {id:'ag_doc', era:'agri',  g:'other',name:'郎中',       slot:2, note:'依赖师承与草药，医学知识口耳相传'},
+  {id:'ag_tch', era:'agri',  g:'other',name:'私塾先生',   slot:3, note:'精英教育的传递者，知识的守门人'},
+  {id:'ag_sol', era:'agri',  g:'other',name:'兵士',       slot:4, note:'维护秩序与疆土，帝国暴力机器的执行者'},
+
+  // ══════════════ 工业时代 · 福特汽车 ══════════════
+  // 核心业务
+  {id:'in_ceo', era:'indus', g:'biz',  name:'总裁·厂主',  slot:0, note:'工厂的最高掌控者，工业资本的人格化'},
+  {id:'in_eng', era:'indus', g:'biz',  name:'工程师',     slot:1, note:'设计机器与流程，技术文明的核心生产力'},
+  {id:'in_sal', era:'indus', g:'biz',  name:'销售员',     slot:2, isNew:true, note:'工业过剩催生专职销售，从行商到区域代理体系'},
+  {id:'in_ads', era:'indus', g:'biz',  name:'广告人',     slot:3, isNew:true, note:'大众消费时代，品牌传播与说服力成为商业必需'},
+  {id:'in_wkr', era:'indus', g:'biz',  name:'流水线工人', slot:4, note:'福特制的象征：人成为机器系统的标准化零件'},
+  // 职能支持
+  {id:'in_fin', era:'indus', g:'func', name:'会计·财务',  slot:0, note:'大规模资本运作催生专业财务，复式记账·成本核算·财务报表'},
+  {id:'in_hr',  era:'indus', g:'func', name:'人事专员',   slot:1, isNew:true, note:'大型工厂管理数千工人，专职人事职能首次从管理层独立'},
+  {id:'in_adm', era:'indus', g:'func', name:'行政主管',   slot:2, isNew:true, note:'工厂日常行政·文件管理·设施协调，科层制的润滑剂'},
+  {id:'in_lgl', era:'indus', g:'func', name:'法务顾问',   slot:3, isNew:true, note:'工业时代合同·专利·劳动法复杂化，企业法务需求激增'},
+  {id:'in_prch',era:'indus', g:'func', name:'采购专员',   slot:4, isNew:true, note:'大规模生产需要专职原材料采购与供应商管理'},
+  // 其他领域
+  {id:'in_doc', era:'indus', g:'other',name:'医生',       slot:0, note:'现代医学科学化，职业壁垒与执照制度确立'},
+  {id:'in_tch', era:'indus', g:'other',name:'教师',       slot:1, note:'公共教育体系诞生，从精英私塾到义务教育'},
+  {id:'in_sol', era:'indus', g:'other',name:'军人',       slot:2, note:'现代军队体系成熟，国家化·职业化·机械化'},
+  {id:'in_tlg', era:'indus', g:'other',name:'电报员',     slot:3, isNew:true, note:'1837年电报发明，人类第一个「信息传输」专职岗'},
+  {id:'in_jnl', era:'indus', g:'other',name:'记者',       slot:4, isNew:true, note:'印刷业工业化催生大众新闻业'},
+
+  // ══════════════ 信息时代 · 谷歌 ══════════════
+  // 核心业务
+  {id:'if_ceo', era:'info',  g:'biz',  name:'CEO',        slot:0, note:'平台型科技公司掌舵者，从工厂制到产品思维的领导力转型'},
+  {id:'if_pm',  era:'info',  g:'biz',  name:'产品经理',   slot:1, isNew:true, note:'数字产品时代的核心角色，用户与技术之间的翻译官'},
+  {id:'if_swe', era:'info',  g:'biz',  name:'软件工程师', slot:2, note:'代码即产品，工程师成为信息时代核心生产力'},
+  {id:'if_dat', era:'info',  g:'biz',  name:'数据分析师', slot:3, isNew:true, note:'数字化产生海量数据，从数据提炼商业洞察'},
+  {id:'if_mkt', era:'info',  g:'biz',  name:'市场营销',   slot:4, note:'数字渠道重构传播，从人海推销到算法增长'},
+  {id:'if_dsg', era:'info',  g:'biz',  name:'设计师',     slot:5, isNew:true, note:'用户体验成为竞争壁垒，设计师进入科技核心团队'},
+  {id:'if_ops', era:'info',  g:'biz',  name:'运营专员',   slot:6, isNew:true, note:'互联网增长需要专职运营，连接产品·用户·数据闭环'},
+  {id:'if_cs',  era:'info',  g:'biz',  name:'客服代表',   slot:7, isNew:true, note:'大规模 C 端产品催生专职客服体系'},
+  // 职能支持
+  {id:'if_hr',  era:'info',  g:'func', name:'人力资源',   slot:0, note:'从人事档案管理升级：招聘·文化·组织发展·薪酬体系'},
+  {id:'if_fin', era:'info',  g:'func', name:'财务分析师', slot:1, note:'从账目记录进化：数据驱动的财务建模·预测·投资决策'},
+  {id:'if_lgl', era:'info',  g:'func', name:'法务·合规',  slot:2, note:'知识产权·数据隐私·反垄断监管复杂度指数级上升'},
+  // 其他领域
+  {id:'if_doc', era:'info',  g:'other',name:'医生',       slot:0, note:'循证医学深化，电子病历与影像 AI 辅助兴起'},
+  {id:'if_tch', era:'info',  g:'other',name:'教师',       slot:1, note:'多媒体与在线课程兴起，开始动摇传统课堂'},
+  {id:'if_sol', era:'info',  g:'other',name:'军人',       slot:2, note:'信息战·无人机·精确制导，战争形态数字化转型'},
+  {id:'if_jnl', era:'info',  g:'other',name:'记者·媒体人',slot:3, note:'互联网重构媒体格局，从印刷到数字内容平台'},
+
+  // ══════════════ AI 时代 · AI 原生公司 ══════════════
+  // 核心业务
+  {id:'ai_ceo', era:'ai',    g:'biz',  name:'CEO·创始人', slot:0, note:'AI公司掌舵者，技术判断力与商业敏感缺一不可'},
+  {id:'ai_apm', era:'ai',    g:'biz',  name:'AI 产品经理', slot:1, isNew:true, note:'懂AI能力边界又懂用户需求，AI时代最稀缺产品角色'},
+  {id:'ai_eng', era:'ai',    g:'biz',  name:'AI 工程师',  slot:2, note:'构建与部署AI系统，软件工程师在AI时代的进化形态'},
+  {id:'ai_dsc', era:'ai',    g:'biz',  name:'数据科学家', slot:3, note:'统计·ML·因果推断融合，为AI系统提供智识支柱'},
+  {id:'ai_pmt', era:'ai',    g:'biz',  name:'提示词工程师',slot:4, isNew:true, note:'与大语言模型深度协作的专家，新时代「人机接口」设计者'},
+  {id:'ai_crt', era:'ai',    g:'biz',  name:'创意总监',   slot:5, note:'AI生成内容，人类把控方向——创意判断力与品牌感知更稀缺'},
+  {id:'ai_grw', era:'ai',    g:'biz',  name:'增长运营',   slot:6, note:'AI工具放大运营杠杆，从执行者进化为数据驱动的增长策略师'},
+  // 职能支持
+  {id:'ai_hr',  era:'ai',    g:'func', name:'People Ops', slot:0, note:'去行政化·数据驱动：AI辅助招聘·文化塑造·人才密度管理'},
+  {id:'ai_lgl', era:'ai',    g:'func', name:'AI合规·法务', slot:1, isNew:true, note:'新增AI监管·算法审查·数据主权·生成内容版权等全新职责'},
+  {id:'ai_cfo', era:'ai',    g:'func', name:'财务·CFO',   slot:2, note:'AI自动化账目后，CFO聚焦资本配置·战略判断·风险建模'},
+  // 其他领域
+  {id:'ai_doc', era:'ai',    g:'other',name:'医生',       slot:0, note:'AI精准诊断辅助，医生聚焦复杂判断·治疗与人文关怀'},
+  {id:'ai_lrn', era:'ai',    g:'other',name:'学习设计师', slot:1, note:'个性化AI学习兴起，教师从讲授者转型为体验设计师'},
+  {id:'ai_sol', era:'ai',    g:'other',name:'军人',       slot:2, note:'无人系统·认知战·AI指挥，人类军人角色深度重构'},
+  {id:'ai_cre', era:'ai',    g:'other',name:'内容创作者', slot:3, note:'个人品牌时代，AI放大独特声音与原创叙事能力'},
+  {id:'ai_eth', era:'ai',    g:'other',name:'AI 伦理师',  slot:4, isNew:true, note:'AI决策的道德守门人，治理框架的制定者'},
+];
+
+const CONN = [
+  // ── 核心业务线 ──────────────────────────────────────────
+  {f:'ag_own', t:'in_ceo',  y:'evolve',    l:'东家→总裁，资本所有者角色的工业化蜕变'},
+  {f:'ag_mgr', t:'in_ceo',  y:'transform', l:'掌柜管理职能融入现代企业高管层'},
+  {f:'ag_trd', t:'in_sal',  y:'evolve',    l:'行商→销售员，商业分工专业化，终结游走式交易'},
+  {f:'ag_clk', t:'in_wkr',  y:'transform', l:'伙计→流水线工人，手工习艺被标准化流程取代'},
+  {f:'in_ceo', t:'if_ceo',  y:'continue',  l:'总裁→CEO，领导角色从工厂到平台的持续演化'},
+  {f:'in_eng', t:'if_swe',  y:'evolve',    l:'机械工程→软件工程，创造力从铁与钢转向代码'},
+  {f:'in_sal', t:'if_mkt',  y:'evolve',    l:'销售员→市场营销，线下推销到算法精准增长'},
+  {f:'in_ads', t:'if_mkt',  y:'transform', l:'广告人→市场营销，两个角色在数字时代完全融合'},
+  {f:'in_wkr', t:null,      y:'disappear', l:'自动化与机器人彻底接管流水线，大规模消失'},
+  {f:'if_ceo', t:'ai_ceo',  y:'continue',  l:'CEO角色延续，AI时代更需要技术洞察与商业判断双驱动'},
+  {f:'if_pm',  t:'ai_apm',  y:'evolve',    l:'产品经理→AI产品经理，产品思维×AI能力边界感知'},
+  {f:'if_swe', t:'ai_eng',  y:'evolve',    l:'软件工程→AI工程，从写代码到构建智能系统'},
+  {f:'if_dat', t:'ai_dsc',  y:'evolve',    l:'数据分析师→数据科学家，分析+ML+因果推断深化融合'},
+  {f:'if_mkt', t:'ai_crt',  y:'evolve',    l:'市场营销→创意总监，策略与创意在AI时代合体'},
+  {f:'if_dsg', t:'ai_crt',  y:'transform', l:'设计师→创意总监，视觉执行被AI替代，方向判断更值钱'},
+  {f:'if_ops', t:'ai_grw',  y:'evolve',    l:'运营专员→增长运营，AI放大数据驱动的增长杠杆'},
+  {f:'if_cs',  t:null,      y:'disappear', l:'AI客服处理90%标准问题，基础客服岗位大量消失'},
+
+  // ── 职能支持线（新增主轴） ────────────────────────────
+  // 财务线
+  {f:'ag_acc', t:'in_fin',  y:'evolve',    l:'账房先生→会计·财务，双式记账普及·成本核算科学化'},
+  {f:'in_fin', t:'if_fin',  y:'evolve',    l:'会计→财务分析师，从账目记录到数据驱动的商业决策'},
+  {f:'if_fin', t:'ai_cfo',  y:'evolve',    l:'财务分析师→CFO，AI自动化账目后聚焦资本配置与战略'},
+  // 人事/HR线
+  {f:'in_hr',  t:'if_hr',   y:'evolve',    l:'人事专员→人力资源，从档案管理升级为组织发展与文化'},
+  {f:'if_hr',  t:'ai_hr',   y:'evolve',    l:'人力资源→People Ops，AI赋能招聘·去行政化·人才密度管理'},
+  // 法务线
+  {f:'ag_grd', t:'in_lgl',  y:'evolve',    l:'护卫头领→法务顾问，暴力保护演化为法律制度保护'},
+  {f:'in_lgl', t:'if_lgl',  y:'continue',  l:'法务顾问→法务合规，合同·专利·劳动法复杂度持续上升'},
+  {f:'if_lgl', t:'ai_lgl',  y:'evolve',    l:'法务→AI合规，新增AI监管·算法审查·数据主权等全新维度'},
+  // 仓管/采购线
+  {f:'ag_kud', t:'in_prch', y:'evolve',    l:'库丁仓管→采购专员，供应链从货物保管升级为专业采购'},
+  {f:'in_prch',t:null,      y:'disappear', l:'ERP系统与供应链平台自动化，独立采购专员岗位大幅萎缩'},
+  // 行政线
+  {f:'in_adm', t:null,      y:'disappear', l:'数字化办公（邮件·日历·OA）使传统行政职能大幅萎缩'},
+
+  // ── 其他领域跨时代轨迹 ──────────────────────────────
+  {f:'ag_frm', t:'in_wkr',  y:'transform', l:'农民进城涌入工厂，从土地到流水线的历史大迁徙'},
+  {f:'ag_smt', t:'in_eng',  y:'evolve',    l:'铁匠手艺升华，金属加工直接孕育了工业工程学'},
+  {f:'ag_doc', t:'in_doc',  y:'evolve',    l:'郎中→医生，经验草药→现代科学医疗的革命性转变'},
+  {f:'in_doc', t:'if_doc',  y:'continue',  l:'医学持续进步，循证医学与数字工具强化诊断'},
+  {f:'if_doc', t:'ai_doc',  y:'continue',  l:'AI辅助诊断，医生核心价值转向复杂判断与人文关怀'},
+  {f:'ag_tch', t:'in_tch',  y:'evolve',    l:'私塾先生→公共教师，精英知识垄断到大众义务教育'},
+  {f:'in_tch', t:'if_tch',  y:'continue',  l:'教育体系延续，多媒体丰富手段，结构未变'},
+  {f:'if_tch', t:'ai_lrn',  y:'evolve',    l:'教师→学习设计师，讲授者转型为个性化体验设计师'},
+  {f:'ag_sol', t:'in_sol',  y:'continue',  l:'军队现代化，国家化·职业化·机械化'},
+  {f:'in_sol', t:'if_sol',  y:'continue',  l:'信息战崛起，数字域成为新战场'},
+  {f:'if_sol', t:'ai_sol',  y:'continue',  l:'无人系统·认知战·AI指挥，人类军人角色深度重构'},
+  {f:'in_tlg', t:null,      y:'disappear', l:'电话与互联网兴起，电报时代终结，岗位消亡'},
+  {f:'in_jnl', t:'if_jnl',  y:'continue',  l:'印刷记者→数字媒体，传播介质革命，新闻本质延续'},
+  {f:'if_jnl', t:'ai_cre',  y:'evolve',    l:'媒体人格化，个人内容创作者在AI时代全面崛起'},
+];
+
+// ══════════════════════════════════════════════════════════════
+// LAYOUT — three visual bands per era column
+// ══════════════════════════════════════════════════════════════
+const ERA_CX = [152, 467, 782, 1097];
+const NW = 168, NH = 40, SLOT = 50;
+const GAP_BF = 36, GAP_FO = 36;
+const CTOP = 198;
+const SVG_W = 1300, SVG_H = 1220;
+
+const eraById = {};
+ERAS.forEach(e => eraById[e.id] = e);
+
+const byEraG = {};
+ERAS.forEach(e => { byEraG[e.id] = {biz:[], func:[], other:[]}; });
+CAREERS.forEach(c => byEraG[c.era][c.g].push(c));
+ERAS.forEach(e => {
+  ['biz','func','other'].forEach(g => byEraG[e.id][g].sort((a,b)=>a.slot-b.slot));
+});
+
+// Node position computation
+const NP = {};
+CAREERS.forEach(c => {
+  const ei = ERAS.findIndex(e => e.id === c.era);
+  const cx = ERA_CX[ei];
+  const bizCount = byEraG[c.era].biz.length;
+  const funcCount = byEraG[c.era].func.length;
+  let cy;
+  if (c.g === 'biz') {
+    cy = CTOP + byEraG[c.era].biz.indexOf(c) * SLOT + NH/2;
+  } else if (c.g === 'func') {
+    cy = CTOP + bizCount * SLOT + GAP_BF + byEraG[c.era].func.indexOf(c) * SLOT + NH/2;
+  } else {
+    cy = CTOP + bizCount * SLOT + GAP_BF + funcCount * SLOT + GAP_FO + byEraG[c.era].other.indexOf(c) * SLOT + NH/2;
+  }
+  NP[c.id] = { cx, cy, left:cx-NW/2, right:cx+NW/2, top:cy-NH/2, bottom:cy+NH/2, ei };
+});
+
+const CS = {
+  continue:  {color:'#22d3ee', dash:'',    w:2.3, op:0.55},
+  evolve:    {color:'#f59e0b', dash:'',    w:2.0, op:0.60},
+  transform: {color:'#c084fc', dash:'5 3', w:1.8, op:0.52},
+  disappear: {color:'#f87171', dash:'4 3', w:1.5, op:0.48},
+};
+
+// Group accent colors
+const GA = { biz:'#f0b429', func:'#a78bfa', other:'#6b7280' };
+const GB = { biz:'rgba(240,180,41,0.03)', func:'rgba(167,139,250,0.025)', other:'#0c0c1e' };
+const GT = { biz:'rgba(240,180,41,0.45)', func:'rgba(167,139,250,0.55)', other:'rgba(107,114,128,0.5)' };
+
+// ══════════════════════════════════════════════════════════════
+// SVG RENDER
+// ══════════════════════════════════════════════════════════════
+const svg = document.getElementById('es');
+const NS = 'http://www.w3.org/2000/svg';
+const mk = (t,a={}) => { const e=document.createElementNS(NS,t); Object.entries(a).forEach(([k,v])=>e.setAttribute(k,v)); return e; };
+const tx = (s,a={}) => { const t=mk('text',a); t.textContent=s; return t; };
+
+svg.appendChild(mk('rect',{x:0,y:0,width:SVG_W,height:SVG_H,fill:'#07070f'}));
+for(let y=0;y<SVG_H;y+=38) svg.appendChild(mk('line',{x1:0,y1:y,x2:SVG_W,y2:y,stroke:'rgba(255,255,255,0.011)','stroke-width':1}));
+
+// Era columns
+ERAS.forEach((era,i) => {
+  const cx = ERA_CX[i];
+  const bizN = byEraG[era.id].biz.length;
+  const funcN = byEraG[era.id].func.length;
+  const othN  = byEraG[era.id].other.length;
+
+  // Full column bg
+  svg.appendChild(mk('rect',{x:cx-NW/2-14,y:16,width:NW+28,height:SVG_H-32,fill:era.bg,rx:2}));
+
+  // Band highlights
+  const bizTop  = CTOP - 10;
+  const bizH    = bizN * SLOT + 6;
+  const funcTop = CTOP + bizN * SLOT + GAP_BF - 10;
+  const funcH   = funcN * SLOT + 6;
+  const othTop  = funcTop + funcH + GAP_FO - 6;
+  const othH    = othN * SLOT + 6;
+
+  svg.appendChild(mk('rect',{x:cx-NW/2-8,y:bizTop,width:NW+16,height:bizH,fill:'rgba(240,180,41,0.035)',stroke:'rgba(240,180,41,0.10)','stroke-width':0.5,rx:1}));
+  svg.appendChild(mk('rect',{x:cx-NW/2-8,y:funcTop,width:NW+16,height:funcH,fill:'rgba(167,139,250,0.025)',stroke:'rgba(167,139,250,0.08)','stroke-width':0.5,rx:1}));
+
+  // Era header
+  svg.appendChild(mk('line',{x1:cx-NW/2,y1:60,x2:cx+NW/2,y2:60,stroke:era.accent,'stroke-width':1,'stroke-opacity':0.55}));
+  svg.appendChild(tx(`0${i+1}`,{x:cx-NW/2,y:48,fill:era.accent,'font-size':10,'font-family':'IBM Plex Mono,monospace','fill-opacity':0.45,'letter-spacing':'0.2em'}));
+  svg.appendChild(tx(era.name,{x:cx,y:88,fill:era.accent,'font-size':13.5,'font-family':'Playfair Display,serif','font-weight':700,'text-anchor':'middle'}));
+
+  // Company badge
+  svg.appendChild(mk('rect',{x:cx-NW/2+4,y:96,width:NW-8,height:17,fill:era.bg,stroke:era.accent,'stroke-width':0.6,'stroke-opacity':0.45,rx:2}));
+  svg.appendChild(tx(era.co,{x:cx,y:108,fill:era.accent,'font-size':9.5,'font-family':'IBM Plex Mono,monospace','text-anchor':'middle','font-weight':500}));
+  svg.appendChild(tx(era.period,{x:cx,y:128,fill:'rgba(128,128,160,0.42)','font-size':8.5,'font-family':'IBM Plex Mono,monospace','text-anchor':'middle','letter-spacing':'0.06em'}));
+  svg.appendChild(tx(era.coD,{x:cx,y:142,fill:'rgba(128,128,160,0.28)','font-size':8,'font-family':'IBM Plex Mono,monospace','text-anchor':'middle'}));
+
+  // Band labels
+  svg.appendChild(tx('▌ 核心业务',{x:cx-NW/2+3,y:bizTop+12,fill:'rgba(240,180,41,0.52)','font-size':7.5,'font-family':'IBM Plex Mono,monospace'}));
+  svg.appendChild(tx(`${bizN}人`,{x:cx+NW/2-5,y:bizTop+12,fill:'rgba(240,180,41,0.38)','font-size':7,'font-family':'IBM Plex Mono,monospace','text-anchor':'end'}));
+  svg.appendChild(tx('◆ 职能支持',{x:cx-NW/2+3,y:funcTop+12,fill:'rgba(167,139,250,0.52)','font-size':7.5,'font-family':'IBM Plex Mono,monospace'}));
+  svg.appendChild(tx(`${funcN}人`,{x:cx+NW/2-5,y:funcTop+12,fill:'rgba(167,139,250,0.38)','font-size':7,'font-family':'IBM Plex Mono,monospace','text-anchor':'end'}));
+  svg.appendChild(tx('— 其他领域',{x:cx-NW/2+3,y:othTop+12,fill:'rgba(107,114,128,0.42)','font-size':7.5,'font-family':'IBM Plex Mono,monospace'}));
+
+  // Separators between bands
+  const sep1Y = bizTop + bizH + GAP_BF/2;
+  const sep2Y = funcTop + funcH + GAP_FO/2;
+  [sep1Y, sep2Y].forEach(sy => {
+    svg.appendChild(mk('line',{x1:cx-NW/2+4,y1:sy,x2:cx+NW/2-4,y2:sy,stroke:'rgba(255,255,255,0.07)','stroke-width':0.8,'stroke-dasharray':'3 5'}));
+  });
+
+  // Bottom
+  svg.appendChild(mk('line',{x1:cx-NW/2,y1:SVG_H-40,x2:cx+NW/2,y2:SVG_H-40,stroke:era.accent,'stroke-width':0.5,'stroke-opacity':0.15}));
+  svg.appendChild(tx(`${bizN}核心 + ${funcN}职能 + ${othN}领域`,{x:cx,y:SVG_H-24,fill:'rgba(128,128,160,0.22)','font-size':8,'font-family':'IBM Plex Mono,monospace','text-anchor':'middle'}));
+});
+
+// Transition zone markers
+[[ERA_CX[0],ERA_CX[1],'工业革命','1760s'],[ERA_CX[1],ERA_CX[2],'数字革命','1970s'],[ERA_CX[2],ERA_CX[3],'AI 革命','2020s']]
+.forEach(([x1,x2,l1,l2]) => {
+  const mx=(x1+x2)/2;
+  svg.appendChild(mk('line',{x1:mx,y1:60,x2:mx,y2:SVG_H-40,stroke:'rgba(255,255,255,0.03)','stroke-width':1,'stroke-dasharray':'2 9'}));
+  svg.appendChild(tx(l1,{x:mx,y:75,fill:'rgba(128,128,160,0.18)','font-size':8.5,'font-family':'IBM Plex Mono,monospace','text-anchor':'middle','letter-spacing':'0.10em'}));
+  svg.appendChild(tx(l2,{x:mx,y:88,fill:'rgba(128,128,160,0.14)','font-size':8,'font-family':'IBM Plex Mono,monospace','text-anchor':'middle'}));
+});
+
+// Connections
+const cgL = mk('g',{id:'cg'});
+function bezD(sx,sy,ex,ey){const mx=(sx+ex)/2;return `M${sx} ${sy} C${mx} ${sy},${mx} ${ey},${ex} ${ey}`;}
+
+CONN.forEach(conn => {
+  const s=CS[conn.y]; if(!s) return;
+  if(!conn.t) {
+    const fp=NP[conn.f]; if(!fp) return;
+    const nx=ERA_CX[fp.ei+1], ex=nx-NW/2-26, ey=fp.cy+10;
+    cgL.appendChild(mk('path',{d:bezD(fp.right,fp.cy,ex,ey),stroke:s.color,'stroke-width':s.w,fill:'none','stroke-opacity':s.op,'stroke-dasharray':s.dash,class:'ep','data-f':conn.f,'data-t':'','data-y':conn.y}));
+    cgL.appendChild(tx('✕',{x:ex+2,y:ey+4,fill:s.color,'fill-opacity':s.op+0.15,'font-size':8.5,'font-family':'IBM Plex Mono,monospace'}));
+    return;
+  }
+  const fp=NP[conn.f], tp=NP[conn.t];
+  if(!fp||!tp) return;
+  cgL.appendChild(mk('path',{d:bezD(fp.right,fp.cy,tp.left,tp.cy),stroke:s.color,'stroke-width':s.w,fill:'none','stroke-opacity':s.op,'stroke-dasharray':s.dash||'',class:'ep','data-f':conn.f,'data-t':conn.t,'data-y':conn.y}));
+});
+svg.appendChild(cgL);
+
+// Nodes
+const ngL = mk('g',{id:'ng'});
+CAREERS.forEach(c => {
+  const p=NP[c.id]; if(!p) return;
+  const era=eraById[c.era];
+  const bColor = GA[c.g];
+  const bgColor = GB[c.g];
+
+  const g=mk('g',{class:'cn','data-id':c.id,'data-era':c.era,'data-g':c.g});
+  g.appendChild(mk('rect',{x:p.left+2,y:p.top+2,width:NW,height:NH,fill:'rgba(0,0,0,0.4)',rx:2}));
+  const bg=mk('rect',{x:p.left,y:p.top,width:NW,height:NH,fill:bgColor,stroke:bColor,
+    'stroke-width':c.g==='biz'?0.9:c.g==='func'?0.8:0.5,
+    'stroke-opacity':c.g==='biz'?0.52:c.g==='func'?0.45:0.22,rx:2,class:'nb'});
+  g.appendChild(bg);
+  // Left bar
+  g.appendChild(mk('rect',{x:p.left,y:p.top,width:3,height:NH,fill:bColor,
+    'fill-opacity':c.g==='biz'?0.85:c.g==='func'?0.7:0.5,rx:1}));
+  // Name
+  const nameColor = c.g==='biz'?'#f5e6c8':c.g==='func'?'#ddd0f8':'#c8c8dc';
+  const fs = c.name.length>8?'9.5':'10.5';
+  g.appendChild(tx(c.name,{x:p.left+11,y:p.cy+4,fill:nameColor,'font-size':fs,'font-family':'IBM Plex Mono,monospace','font-weight':500}));
+  // NEW badge
+  if(c.isNew){
+    g.appendChild(mk('rect',{x:p.right-30,y:p.top+5,width:26,height:10,fill:'rgba(16,185,129,0.1)',stroke:'rgba(16,185,129,0.38)','stroke-width':0.5,rx:1}));
+    g.appendChild(tx('✦NEW',{x:p.right-17,y:p.top+13,fill:'#10b981','font-size':6.5,'font-family':'IBM Plex Mono,monospace','text-anchor':'middle'}));
+  }
+  ngL.appendChild(g);
+});
+svg.appendChild(ngL);
+
+// ══════════════════════════════════════════════════════════════
+// TRAJECTORY: BFS forward + backward
+// ══════════════════════════════════════════════════════════════
+function getTrajectory(cid) {
+  const v = new Set([cid]);
+  // backward
+  let fr=[cid];
+  while(fr.length){const nxt=[];CONN.forEach(c=>{if(fr.includes(c.t)&&c.f&&!v.has(c.f)){v.add(c.f);nxt.push(c.f);}});fr=nxt;}
+  // forward
+  fr=[cid];
+  while(fr.length){const nxt=[];CONN.forEach(c=>{if(fr.includes(c.f)&&c.t&&!v.has(c.t)){v.add(c.t);nxt.push(c.t);}});fr=nxt;}
+  return v;
+}
+function buildChain(cid) {
+  const traj=getTrajectory(cid);
+  const sorted=[...traj].map(id=>CAREERS.find(c=>c.id===id)).filter(Boolean)
+    .sort((a,b)=>{
+      const ea=ERAS.findIndex(e=>e.id===a.era), eb=ERAS.findIndex(e=>e.id===b.era);
+      return ea!==eb ? ea-eb : a.slot-b.slot;
+    });
+  if(sorted.length<=1) return '—（本时代独立职位）';
+  return sorted.map(c=>`${c.name}（${eraById[c.era].name.replace('时代','')}）`).join(' → ');
+}
+
+// ══════════════════════════════════════════════════════════════
+// INTERACTION
+// ══════════════════════════════════════════════════════════════
+const tt=document.getElementById('tt');
+let aFilter='all';
+
+function dimAll(){svg.querySelectorAll('.ep').forEach(p=>{p.classList.add('dim');p.classList.remove('lit');});svg.querySelectorAll('.cn').forEach(n=>{n.classList.add('dim');n.classList.remove('lit');});}
+function applyFilter(p){if(aFilter==='all')return;if(aFilter==='new'){p.classList.add('dim');return;}if(p.getAttribute('data-y')!==aFilter)p.classList.add('dim');}
+function resetAll(){
+  svg.querySelectorAll('.ep').forEach(p=>{p.classList.remove('dim','lit');applyFilter(p);});
+  svg.querySelectorAll('.cn').forEach(n=>{n.classList.remove('dim','lit');});
+  if(aFilter==='new'){svg.querySelectorAll('.cn').forEach(n=>{const c=CAREERS.find(x=>x.id===n.getAttribute('data-id'));if(!c?.isNew)n.classList.add('dim');else n.classList.add('lit');});}
+}
+function highlight(cid){
+  const traj=getTrajectory(cid); dimAll();
+  traj.forEach(id=>{const n=svg.querySelector(`.cn[data-id="${id}"]`);if(n){n.classList.remove('dim');n.classList.add('lit');}});
+  svg.querySelectorAll('.ep').forEach(p=>{const f=p.getAttribute('data-f'),t=p.getAttribute('data-t');if(traj.has(f)&&(traj.has(t)||t===''))p.classList.remove('dim'),p.classList.add('lit');});
+}
+
+const TL={continue:'延续',evolve:'升级迭代',transform:'转型融合',disappear:'消亡'};
+function showTT(e,c){
+  const era=eraById[c.era];
+  const gLabel={biz:'核心业务',func:'职能支持',other:'其他领域'};
+  document.getElementById('tt-n').textContent=c.name;
+  document.getElementById('tt-n').style.color=GA[c.g];
+  document.getElementById('tt-et').textContent=`${era.name} · ${era.co} · ${gLabel[c.g]}`;
+  document.getElementById('tt-et').style.color=era.accent+'70';
+  document.getElementById('tt-note').textContent=c.note||'—';
+  const out=CONN.filter(x=>x.f===c.id);
+  if(!out.length){document.getElementById('tt-to').textContent='✓ 在AI时代仍然存续';document.getElementById('tt-to').style.color='#22d3ee';}
+  else{document.getElementById('tt-to').textContent=out.map(x=>!x.t?`✕ 消亡 — ${x.l}`:`→ ${CAREERS.find(q=>q.id===x.t)?.name} [${TL[x.y]||x.y}]`).join('\n');document.getElementById('tt-to').style.color='#8888aa';}
+  document.getElementById('tt-chain').textContent=buildChain(c.id);
+  tt.classList.add('on'); moveTT(e);
+}
+function moveTT(e){const x=e.clientX+16,y=e.clientY-60;tt.style.left=Math.min(x,innerWidth-tt.offsetWidth-16)+'px';tt.style.top=Math.max(y,8)+'px';}
+
+svg.querySelectorAll('.cn').forEach(n=>{
+  const cid=n.getAttribute('data-id'), c=CAREERS.find(x=>x.id===cid); if(!c) return;
+  n.addEventListener('mouseenter',e=>{highlight(cid);showTT(e,c);});
+  n.addEventListener('mousemove',moveTT);
+  n.addEventListener('mouseleave',()=>{resetAll();tt.classList.remove('on');});
+});
+
+document.querySelectorAll('.lb').forEach(btn=>{
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.lb').forEach(b=>b.classList.remove('on'));
+    this.classList.add('on'); aFilter=this.dataset.ef; resetAll();
+    if(aFilter!=='all'&&aFilter!=='new') svg.querySelectorAll('.ep').forEach(p=>applyFilter(p));
+  });
+});
+
+// ══════════════════════════════════════════════════════════════
+// STATS ROW
+// ══════════════════════════════════════════════════════════════
+const sr=document.getElementById('sr');
+[{l:'农业→工业',ei:0},{l:'工业→信息',ei:1},{l:'信息→AI',ei:2}].forEach(t=>{
+  const conns=CONN.filter(c=>NP[c.f]?.ei===t.ei);
+  const cont=conns.filter(c=>c.y==='continue'&&c.t).length;
+  const evol=conns.filter(c=>(c.y==='evolve'||c.y==='transform')&&c.t).length;
+  const dead=conns.filter(c=>c.y==='disappear').length;
+  const newC=CAREERS.filter(c=>ERAS.findIndex(e=>e.id===c.era)===t.ei+1&&c.isNew).length;
+  const d=document.createElement('div'); d.className='sb';
+  d.innerHTML=`<div class="sb-t">${t.l}</div><div class="sn-row">
+    <div class="sn"><span class="sv" style="color:#22d3ee">${cont}</span><span class="sl">延续</span></div>
+    <div class="sn"><span class="sv" style="color:#f59e0b">${evol}</span><span class="sl">升级/转型</span></div>
+    <div class="sn"><span class="sv" style="color:#f87171">${dead}</span><span class="sl">消亡</span></div>
+    <div class="sn"><span class="sv" style="color:#10b981">${newC}</span><span class="sl">新增</span></div>
+  </div>`; sr.appendChild(d);
+});
+const sd=document.createElement('div'); sd.className='sb';
+const bizTotal=CAREERS.filter(c=>c.g==='biz').length;
+const funcTotal=CAREERS.filter(c=>c.g==='func').length;
+sd.innerHTML=`<div class="sb-t">图谱总量</div><div class="sn-row">
+  <div class="sn"><span class="sv" style="color:#f0b429">${bizTotal}</span><span class="sl">核心业务</span></div>
+  <div class="sn"><span class="sv" style="color:#a78bfa">${funcTotal}</span><span class="sl">职能支持</span></div>
+  <div class="sn"><span class="sv">${CONN.length}</span><span class="sl">演化线</span></div>
+</div>`; sr.appendChild(sd);
+
+// ══════════════════════════════════════════════════════════════
+// ANIMATE IN
+// ══════════════════════════════════════════════════════════════
+const obs=new IntersectionObserver(entries=>{
+  if(!entries[0].isIntersecting) return;
+  svg.classList.add('on');
+  svg.querySelectorAll('.ep').forEach((p,i)=>{
+    const y=p.getAttribute('data-y'),s=CS[y]||{};
+    if(!s.dash){try{const l=p.getTotalLength();p.style.strokeDasharray=l;p.style.strokeDashoffset=l;p.style.transition=`stroke-dashoffset 0.85s cubic-bezier(.4,0,.2,1) ${i*.025}s`;requestAnimationFrame(()=>{p.style.strokeDashoffset='0';});}catch(e){}}
+    else{p.style.opacity='0';p.style.transition=`opacity .4s ease ${i*.02+.2}s`;requestAnimationFrame(()=>{p.style.opacity='1';});}
+  });
+  obs.disconnect();
+},{threshold:.03});
+obs.observe(document.querySelector('.do'));
+
+</script>
+
+
+
+<script>
+// ============================================================
+// DATA
+// ============================================================
+const JOBS = [
+  {
+    id: 'pm', name: '产品经理', industry: '科技 / 产品', category: 'tech',
+    threat: 3.5, augment: 9.0, size: 14, risk: 'low',
+    tagline: '与 AI 协作，产品洞察将更深，迭代将更快',
+    tasks: ['用户需求收集与分析', '产品路线图规划', '跨团队协作', 'PRD 撰写', '数据分析与决策'],
+    replaced: '数据报告生成、用户反馈归类、会议纪要、竞品信息收集',
+    moat: '用户同理心与洞察、商业判断力、组织协调、愿景叙事与说服力',
+    newSkills: ['AI 产品能力（理解 LLM 局限）', 'Prompt Engineering', 'AI 工具生态整合', '数据直觉 + AI 分析'],
+    future: '「Super PM」：1人驾驭原来3人团队的信息处理量，聚焦战略与创造',
+    salary: '↑ 显著增长，会用 AI 的 PM 溢价 30-50%',
+    timeline: [
+      { year: '现在', desc: 'AI 辅助分析', color: '#22d3ee' },
+      { year: '2025', desc: '流程高度自动化', color: '#a78bfa' },
+      { year: '2026+', desc: 'AI 原生 PM 标准', color: '#10b981' }
+    ]
+  },
+  {
+    id: 'swe', name: '软件工程师', industry: '科技 / 研发', category: 'tech',
+    threat: 4.5, augment: 9.5, size: 16, risk: 'low',
+    tagline: '编码效率 10x，但架构判断力更值钱',
+    tasks: ['需求分析与架构设计', '编写与审核代码', 'Debug 与性能优化', '代码审查', '技术文档'],
+    replaced: '常规 CRUD 代码编写、单元测试生成、文档撰写、代码格式化',
+    moat: '系统架构设计、业务理解、代码审查判断力、跨团队技术决策、安全意识',
+    newSkills: ['AI 辅助编程（GitHub Copilot、Cursor）', '提示工程', 'AI 代码审查技能', '系统思维升级'],
+    future: '工程师变身「技术架构者 + AI 协调者」，初级岗位减少，高级岗位价值爆炸',
+    salary: '↑↑ 高增长，掌握 AI 工具的工程师市场稀缺溢价持续',
+    timeline: [
+      { year: '现在', desc: 'AI 辅助编码已普及', color: '#22d3ee' },
+      { year: '2025', desc: '初级岗位大幅缩减', color: '#f59e0b' },
+      { year: '2026+', desc: '架构师角色主导', color: '#10b981' }
+    ]
+  },
+  {
+    id: 'ds', name: '数据科学家', industry: '科技 / 分析', category: 'tech',
+    threat: 4.0, augment: 9.0, size: 13, risk: 'low',
+    tagline: '数据分析民主化，但洞察解读无法被替代',
+    tasks: ['数据清洗与预处理', '模型构建与训练', '可视化与报告', '业务问题转化', 'A/B 测试设计'],
+    replaced: '数据清洗、常规报告生成、简单模型训练、可视化图表制作',
+    moat: '业务问题定义能力、假设设计、伦理判断、向非技术方解读结果',
+    newSkills: ['AutoML 工具使用', 'AI 模型评估与审计', 'LLM Fine-tuning 基础', '因果推断思维'],
+    future: '向「AI 系统设计师」进化，负责设计数据驱动的 AI 产品逻辑',
+    salary: '↑ 增长稳健，专注业务洞察的数据科学家溢价持续',
+    timeline: [
+      { year: '现在', desc: '工具层高度自动化', color: '#22d3ee' },
+      { year: '2025', desc: '聚焦洞察与判断', color: '#a78bfa' },
+      { year: '2026+', desc: 'AI 系统设计角色', color: '#10b981' }
+    ]
+  },
+  {
+    id: 'uxd', name: 'UX/UI 设计师', industry: '科技 / 设计', category: 'tech',
+    threat: 5.5, augment: 8.0, size: 12, risk: 'med',
+    tagline: '视觉生成被 AI 接管，但用户体验思维更稀缺',
+    tasks: ['用户研究与访谈', '原型设计', '视觉设计与规范', '可用性测试', '设计系统维护'],
+    replaced: '基础视觉生成、图标制作、配色方案、简单原型框架搭建',
+    moat: '用户心理洞察、可用性判断、体验策略、设计决策背后的逻辑',
+    newSkills: ['Midjourney/Stable Diffusion 驾驭', 'AI 原型工具（Uizard）', '用户研究 AI 辅助', '设计 Prompt 工程'],
+    future: '向「体验策略师」进化，AI 生成视觉，人类把控方向与质量',
+    salary: '→ 稳定但分化，会用 AI 的设计师溢价，纯执行设计师贬值',
+    timeline: [
+      { year: '现在', desc: '视觉层 AI 渗透', color: '#f59e0b' },
+      { year: '2025', desc: '工具层完全 AI 化', color: '#f59e0b' },
+      { year: '2026+', desc: '策略型设计主导', color: '#10b981' }
+    ]
+  },
+  {
+    id: 'mkt', name: '市场营销经理', industry: '市场 / 品牌', category: 'marketing',
+    threat: 5.0, augment: 8.5, size: 13, risk: 'med',
+    tagline: '内容生产自动化，战略与创意判断力更值钱',
+    tasks: ['营销战略规划', '内容策划与创作', '数据分析与归因', '渠道管理', '品牌一致性维护'],
+    replaced: '基础文案撰写、社媒排期、数据报告、AB 测试执行、邮件模板',
+    moat: '品牌直觉与判断、受众洞察、跨渠道协同思维、创意方向把控',
+    newSkills: ['AI 内容工具矩阵（ChatGPT/Jasper/Midjourney）', '数据解读与归因', 'AI 广告投放优化', 'Growth Hacking'],
+    future: '1 个营销经理驾驭原 5 人团队的产出，深度聚焦策略与创意',
+    salary: '↑ 会用 AI 的营销人溢价显著，纯执行型大幅贬值',
+    timeline: [
+      { year: '现在', desc: '内容生产 AI 化', color: '#22d3ee' },
+      { year: '2025', desc: '执行层高度自动化', color: '#f59e0b' },
+      { year: '2026+', desc: '策略+创意核心价值', color: '#10b981' }
+    ]
+  },
+  {
+    id: 'copy', name: '内容创作者/文案', industry: '市场 / 创意', category: 'marketing',
+    threat: 7.5, augment: 6.0, size: 11, risk: 'high',
+    tagline: '大量常规内容被 AI 替代，但独特声音与叙事能力反而更稀缺',
+    tasks: ['文章与营销文案撰写', '社媒内容运营', 'SEO 内容创作', '品牌叙事', '创意概念发展'],
+    replaced: '产品描述、SEO 文章批量生产、简报整理、基础社媒文案',
+    moat: '独特观点与声音、品牌一致性感知、情感共鸣能力、原创叙事结构',
+    newSkills: ['AI 写作工具编辑（非从零写）', '内容策略思维', '多模态内容整合', '社群运营深度'],
+    future: '从「内容生产者」转向「内容策略师 + AI 编辑」，数量减少但质量溢价',
+    salary: '↓ 普通文案贬值，顶级内容创作者溢价拉大，分化加剧',
+    timeline: [
+      { year: '现在', desc: '大量常规内容 AI 化', color: '#ef4444' },
+      { year: '2025', desc: '行业人数锐减', color: '#ef4444' },
+      { year: '2026+', desc: '顶级创作者价值飙升', color: '#f59e0b' }
+    ]
+  },
+  {
+    id: 'seo', name: 'SEO 专员', industry: '市场 / 数字', category: 'marketing',
+    threat: 8.5, augment: 4.5, size: 9, risk: 'high',
+    tagline: '搜索引擎范式被 AI 改变，传统 SEO 岗位面临根本性冲击',
+    tasks: ['关键词研究', '内容优化', '外链建设', '技术 SEO', '排名监控'],
+    replaced: '关键词研究、内容批量生成、基础技术优化、排名报告',
+    moat: '搜索意图理解、品牌权威建设、AI 搜索时代新流量逻辑',
+    newSkills: ['AI 搜索优化（GEO-生成引擎优化）', '品牌权威内容策略', '多渠道流量思维', '数据分析深度'],
+    future: '传统 SEO 岗位萎缩 60%，转型为「数字可见性策略师」',
+    salary: '↓↓ 显著下降，传统 SEO 技能快速贬值',
+    timeline: [
+      { year: '现在', desc: '内容生产环节沦陷', color: '#ef4444' },
+      { year: '2025', desc: 'AI 搜索改变规则', color: '#ef4444' },
+      { year: '2026+', desc: '极少数转型成功', color: '#f59e0b' }
+    ]
+  },
+  {
+    id: 'gr', name: '平面设计师', industry: '创意 / 设计', category: 'marketing',
+    threat: 7.0, augment: 5.5, size: 10, risk: 'high',
+    tagline: '基础视觉执行被 AI 接管，概念与品牌方向感更稀缺',
+    tasks: ['视觉物料设计', 'Logo 与品牌设计', '印刷与数字物料', '排版与配色', '客户沟通'],
+    replaced: '基础图形生成、背景抠图、简单排版、模板化设计',
+    moat: '品牌理解、客户沟通与需求挖掘、创意概念发展、质量判断与把控',
+    newSkills: ['Midjourney/DALL-E 精通', 'AI 辅助设计流程（Adobe Firefly）', '品牌策略思维', '视频 / 动态设计'],
+    future: '从执行设计师变为「创意总监 + AI 指挥者」，纯执行职位大幅减少',
+    salary: '↓ 普通平面设计师贬值，创意总监级溢价',
+    timeline: [
+      { year: '现在', desc: '执行层 AI 渗透', color: '#ef4444' },
+      { year: '2025', desc: '工具层完全变革', color: '#ef4444' },
+      { year: '2026+', desc: '概念创意核心', color: '#f59e0b' }
+    ]
+  },
+  {
+    id: 'fin', name: '财务分析师', industry: '金融 / 财务', category: 'finance',
+    threat: 6.5, augment: 7.5, size: 12, risk: 'med',
+    tagline: '数字处理自动化，但商业判断与风险解读更值钱',
+    tasks: ['财务建模与预测', '报告撰写与分析', '预算管理', '投资分析', '合规审查'],
+    replaced: '标准财务报告生成、数据整合、基础预测模型、合规检查单',
+    moat: '商业背景理解、不确定性判断、与管理层沟通、非标准情况处理',
+    newSkills: ['AI 财务工具整合（Tableau + GPT）', '数据可视化叙事', '战略财务思维', 'AI 模型审计能力'],
+    future: '财务分析师数量减少但质量要求更高，CFA + AI 能力组合者高薪稀缺',
+    salary: '→↑ 总量稳中有降，高端分析师溢价增加',
+    timeline: [
+      { year: '现在', desc: '报告自动化渗透', color: '#f59e0b' },
+      { year: '2025', desc: '执行层收缩', color: '#f59e0b' },
+      { year: '2026+', desc: '战略判断核心价值', color: '#10b981' }
+    ]
+  },
+  {
+    id: 'risk', name: '风控专员', industry: '金融 / 风控', category: 'finance',
+    threat: 6.0, augment: 8.0, size: 11, risk: 'med',
+    tagline: 'AI 能处理大量信号，但最终风险决策仍需人类把关',
+    tasks: ['信用评估', '欺诈检测', '合规审查', '风险报告', '政策制定'],
+    replaced: '规则性欺诈检测、标准化信用评分、合规清单核查、数据汇报',
+    moat: '非常规风险判断、新型欺诈识别（AI 欺诈时代）、监管关系管理、道德决策',
+    newSkills: ['AI 风控模型监督与审计', 'AI 生成欺诈识别', '可解释 AI 技能', '监管科技（RegTech）'],
+    future: '人员精简但专业化程度更高，负责监督 AI 风控系统的人类层',
+    salary: '→ 稳定，顶级风控专家因 AI 判断边界更值钱',
+    timeline: [
+      { year: '现在', desc: 'AI 风控规则层接管', color: '#22d3ee' },
+      { year: '2025', desc: '人类聚焦复杂判断', color: '#a78bfa' },
+      { year: '2026+', desc: 'AI 监督者角色', color: '#10b981' }
+    ]
+  },
+  {
+    id: 'acct', name: '会计 / 簿记员', industry: '金融 / 财务', category: 'finance',
+    threat: 8.5, augment: 3.5, size: 9, risk: 'high',
+    tagline: '记账与核算是 AI 最容易自动化的工作之一',
+    tasks: ['账目记录', '财务报表生成', '税务申报', '发票处理', '银行对账'],
+    replaced: '日常记账、发票自动识别与归类、基础报表生成、税务预填',
+    moat: '复杂税务规划、审计关系、公司特殊情况处理、数字背后业务理解',
+    newSkills: ['云会计软件精通（Xero/QuickBooks AI）', '税务规划深化', '财务顾问能力', '数据分析转型'],
+    future: '初级会计岗位减少 50-70%，存活者向「财务顾问」角色转型',
+    salary: '↓↓ 基础会计岗位薪资和数量双降',
+    timeline: [
+      { year: '现在', desc: '常规账目已 AI 化', color: '#ef4444' },
+      { year: '2025', desc: '大量初级岗消失', color: '#ef4444' },
+      { year: '2026+', desc: '顾问型少量存活', color: '#f59e0b' }
+    ]
+  },
+  {
+    id: 'hr', name: 'HR 专员', industry: '人力资源', category: 'ops',
+    threat: 6.5, augment: 6.5, size: 10, risk: 'med',
+    tagline: '事务性 HR 工作大量自动化，但人文关怀无法被替代',
+    tasks: ['招聘筛选', '员工关系管理', '培训与发展', '绩效管理', '薪酬福利'],
+    replaced: '简历筛选、面试排期、员工问答（AI HR Bot）、标准化培训内容生成',
+    moat: '员工情感支持、组织文化建设、复杂冲突调解、战略人才规划',
+    newSkills: ['HRIS + AI 系统操作', 'People Analytics', 'AI 偏见识别', '组织发展（OD）技能'],
+    future: 'HR 从事务性转向战略性，BP（业务伙伴）角色更受重视',
+    salary: '→ 总量稳定，但事务性 HR 贬值，HRBP 和 OD 溢价',
+    timeline: [
+      { year: '现在', desc: '招聘筛选 AI 渗透', color: '#f59e0b' },
+      { year: '2025', desc: '事务性岗位收缩', color: '#f59e0b' },
+      { year: '2026+', desc: '战略 HR 核心价值', color: '#10b981' }
+    ]
+  },
+  {
+    id: 'recruit', name: '招聘专员', industry: '人力资源', category: 'ops',
+    threat: 8.0, augment: 5.0, size: 9, risk: 'high',
+    tagline: '简历筛选与候选人匹配几乎完全可 AI 化',
+    tasks: ['发布职位', '简历筛选', '初步沟通', '面试协调', '候选人跟进'],
+    replaced: '简历扫描与评分、初始候选人触达、面试安排、职位描述生成',
+    moat: '高端人才关系建设、雇主品牌打造、文化匹配判断、候选人体验管理',
+    newSkills: ['AI 招聘工具精通', '人才市场数据分析', '高端猎头技能', '雇主品牌运营'],
+    future: '标准招聘岗位大量减少，转型为「人才战略顾问」少量高薪存活',
+    salary: '↓ 普通招聘贬值，人才战略顾问溢价',
+    timeline: [
+      { year: '现在', desc: '筛选环节基本 AI 化', color: '#ef4444' },
+      { year: '2025', desc: '60% 任务可自动化', color: '#ef4444' },
+      { year: '2026+', desc: '猎头式少量存活', color: '#f59e0b' }
+    ]
+  },
+  {
+    id: 'cs', name: '客服代表', industry: '运营 / 服务', category: 'ops',
+    threat: 9.0, augment: 2.5, size: 10, risk: 'high',
+    tagline: 'AI 客服已能处理 70-80% 的标准化问题',
+    tasks: ['问题解答', '投诉处理', '订单跟进', '产品咨询', '客户关系维护'],
+    replaced: '常见问题解答、订单状态查询、标准投诉处理、知识库检索',
+    moat: '高难度复杂投诉、情绪化客户安抚、关键客户关系维护、企业外交',
+    newSkills: ['AI 客服监督与干预', '复杂问题识别与升级', '客户成功思维', '危机沟通'],
+    future: '大量裁员，剩余岗位转型为「客户成功经理」处理复杂与高价值客户',
+    salary: '↓↓ 大幅下降，基础客服岗消失大半',
+    timeline: [
+      { year: '现在', desc: '7成问题已 AI 处理', color: '#ef4444' },
+      { year: '2025', desc: '基础岗大规模消失', color: '#ef4444' },
+      { year: '2026+', desc: '复杂关系管理存活', color: '#f59e0b' }
+    ]
+  },
+  {
+    id: 'ops', name: '运营专员', industry: '运营 / 电商', category: 'ops',
+    threat: 6.5, augment: 6.0, size: 10, risk: 'med',
+    tagline: '数据运营自动化，但增长策略与用户运营更有价值',
+    tasks: ['活动策划与执行', '数据监控与分析', '用户增长', '供应商协调', '内容运营'],
+    replaced: '数据报告生成、活动效果分析、基础内容排期、供应商对账',
+    moat: '增长策略判断、用户社群建设、危机处理、多方协调能力',
+    newSkills: ['AI 数据分析工具', '增长黑客思维', '私域运营深化', '用户心理洞察'],
+    future: '向「增长策略师」进化，执行层自动化，策略层价值提升',
+    salary: '→ 稳定中分化，增长型运营溢价，执行型运营收缩',
+    timeline: [
+      { year: '现在', desc: '数据层自动化', color: '#f59e0b' },
+      { year: '2025', desc: '策略与执行分化', color: '#f59e0b' },
+      { year: '2026+', desc: '策略型运营主导', color: '#10b981' }
+    ]
+  },
+  {
+    id: 'trans', name: '翻译', industry: '语言 / 服务', category: 'ops',
+    threat: 9.0, augment: 3.0, size: 8, risk: 'high',
+    tagline: 'GPT-4 级别翻译已接近专业水准，市场剧烈萎缩',
+    tasks: ['文档翻译', '同声传译', '本地化', '字幕翻译', '技术文档翻译'],
+    replaced: '通用文档翻译、基础字幕、标准合同翻译、大部分技术文档',
+    moat: '高端文学翻译、法律/医疗特殊语境、跨文化细节处理、现场口译关系',
+    newSkills: ['AI 翻译后期编辑（MTPE）', '本地化策略', '文化顾问转型', '口译精专化'],
+    future: '翻译市场缩小 70%，存活者专注 AI 无法处理的高风险高细节场景',
+    salary: '↓↓ 大幅贬值，仅顶尖文学/口译领域维持',
+    timeline: [
+      { year: '现在', desc: 'AI 翻译已可商用', color: '#ef4444' },
+      { year: '2025', desc: '市场大幅萎缩', color: '#ef4444' },
+      { year: '2026+', desc: '极少数高端存活', color: '#f59e0b' }
+    ]
+  },
+  {
+    id: 'qa', name: '测试工程师/QA', industry: '科技 / 质量', category: 'tech',
+    threat: 7.5, augment: 5.5, size: 9, risk: 'high',
+    tagline: 'AI 自动化测试接管大量重复工作，测试策略能力更关键',
+    tasks: ['测试用例编写', '手动测试执行', '自动化测试脚本', 'Bug 报告', '回归测试'],
+    replaced: '标准测试用例生成、UI 自动化测试、回归测试执行、基础 Bug 复现',
+    moat: '边缘场景识别、探索性测试、测试策略设计、业务场景理解',
+    newSkills: ['AI 测试工具（Testim/Mabl）', 'AI 辅助测试策略', '安全测试', '用户体验测试深化'],
+    future: '从执行者变为「质量策略师 + AI 测试系统监督者」',
+    salary: '↓ 初级 QA 大幅贬值，测试架构师价值增加',
+    timeline: [
+      { year: '现在', desc: '自动化测试 AI 化', color: '#ef4444' },
+      { year: '2025', desc: '手动测试岗大减', color: '#ef4444' },
+      { year: '2026+', desc: '质量策略师存活', color: '#f59e0b' }
+    ]
+  },
+  {
+    id: 'supply', name: '供应链经理', industry: '运营 / 物流', category: 'ops',
+    threat: 5.0, augment: 8.0, size: 12, risk: 'low',
+    tagline: 'AI 优化供应链预测，但应对不确定性的判断力无法复制',
+    tasks: ['需求预测', '供应商管理', '库存优化', '风险管理', '物流协调'],
+    replaced: '需求预测模型、库存自动补货、标准供应商评分、运输路径优化',
+    moat: '地缘政治风险判断、关键供应商关系、黑天鹅事件应对、组织协调',
+    newSkills: ['AI 供应链平台（o9/Blue Yonder）', '供应链韧性设计', '可持续供应链', '实时数据决策'],
+    future: '向「供应链策略师」进化，AI 处理日常优化，人类聚焦战略韧性',
+    salary: '↑ 稳定增长，高端供应链人才持续稀缺',
+    timeline: [
+      { year: '现在', desc: '预测层 AI 渗透', color: '#22d3ee' },
+      { year: '2025', desc: '执行层高度自动化', color: '#a78bfa' },
+      { year: '2026+', desc: '战略韧性核心价值', color: '#10b981' }
+    ]
+  },
+  {
+    id: 'mgr', name: '中层管理者', industry: '管理 / 通用', category: 'ops',
+    threat: 5.5, augment: 7.0, size: 13, risk: 'med',
+    tagline: 'AI 接管信息汇总职能，但领导力与组织建设更核心',
+    tasks: ['团队管理与激励', '信息上传下达', '资源调配', '绩效管理', '跨部门协调'],
+    replaced: '会议纪要与汇报、数据汇总、进度跟踪、绩效数据收集',
+    moat: '人才识别与发展、组织文化塑造、复杂冲突调解、战略向下传导',
+    newSkills: ['AI 赋能团队管理', '数据驱动决策', '远程 + AI 混合团队管理', '教练式领导力'],
+    future: '纯传达型中层消失，转型为「团队赋能者 + 战略执行者」',
+    salary: '→ 分化，具备战略思维的中层溢价，纯执行型中层贬值',
+    timeline: [
+      { year: '现在', desc: '信息层职能被取代', color: '#f59e0b' },
+      { year: '2025', desc: '中层结构重组', color: '#f59e0b' },
+      { year: '2026+', desc: '领导力核心价值', color: '#10b981' }
+    ]
+  },
+  {
+    id: 'vide', name: '视频编辑', industry: '创意 / 媒体', category: 'marketing',
+    threat: 7.0, augment: 6.0, size: 10, risk: 'high',
+    tagline: 'AI 视频工具革命性降低剪辑门槛，但叙事能力护城河更高',
+    tasks: ['剪辑与剪接', '配音与字幕', '特效与调色', '内容策划', '多平台适配'],
+    replaced: '基础剪辑、自动字幕生成、简单特效、多平台切割与转码',
+    moat: '叙事节奏感、创意选择、导演性思维、复杂后期合成判断',
+    newSkills: ['AI 视频工具（Runway/Pika）', 'AI 语音与配音', '交互视频', '虚拟制作'],
+    future: '普通剪辑岗减少，向「视频叙事导演 + AI 工具指挥者」进化',
+    salary: '↓ 基础剪辑贬值，创意总监型溢价',
+    timeline: [
+      { year: '现在', desc: '基础剪辑 AI 化', color: '#ef4444' },
+      { year: '2025', desc: 'AI 生成视频突破', color: '#ef4444' },
+      { year: '2026+', desc: '叙事导演核心', color: '#f59e0b' }
+    ]
+  },
+  // New roles
+  {
+    id: 'aipm', name: 'AI 产品经理', industry: '科技 / AI 产品', category: 'new',
+    threat: 1.5, augment: 9.5, size: 11, risk: 'new',
+    tagline: '最稀缺的新兴岗位之一，懂 AI 又懂产品',
+    tasks: ['AI 能力规划与落地', 'AI 产品路线图', '用户价值与 AI 边界定义', '模型评估', 'AI 伦理与安全'],
+    replaced: '几乎无直接替代风险——这个岗位本身就是 AI 时代新产物',
+    moat: '技术与业务的双向翻译能力、AI 能力边界感知、用户体验守门人',
+    newSkills: ['LLM API 使用与评估', 'AI 产品指标体系', '提示工程', 'AI 安全与伦理', 'Responsible AI'],
+    future: '需求持续爆炸式增长，未来 5 年将成为最受追捧的产品岗位之一',
+    salary: '↑↑↑ 极高溢价，比传统 PM 薪资高 40-80%',
+    timeline: [
+      { year: '现在', desc: '全球极度稀缺', color: '#22d3ee' },
+      { year: '2025', desc: '需求持续爆发', color: '#22d3ee' },
+      { year: '2026+', desc: '成为标准 PM 要求', color: '#10b981' }
+    ]
+  },
+  {
+    id: 'pe', name: '提示词工程师', industry: '科技 / AI', category: 'new',
+    threat: 2.5, augment: 9.0, size: 9, risk: 'new',
+    tagline: '与 LLM 沟通的专家，AI 基础设施的关键角色',
+    tasks: ['系统提示词设计', 'AI 工作流构建', '模型行为评估', '应用场景落地', 'AI 效果优化'],
+    replaced: '自身替代风险低，反而因 AI 能力提升而需求增加',
+    moat: '对 LLM 内部逻辑的直觉、跨场景迁移能力、快速实验能力',
+    newSkills: ['RAG 系统设计', 'Fine-tuning 基础', 'AI Agent 构建', '多模态提示设计', '评估框架设计'],
+    future: '短期爆发，中期会与软件工程深度融合，成为 AI 工程师的标配能力',
+    salary: '↑↑ 高溢价，但随着技能普及会有回归',
+    timeline: [
+      { year: '现在', desc: '专业岗极度稀缺', color: '#22d3ee' },
+      { year: '2025', desc: '工具化降低门槛', color: '#22d3ee' },
+      { year: '2026+', desc: '融入通用技能', color: '#a78bfa' }
+    ]
+  },
+  {
+    id: 'aitrainer', name: 'AI 数据标注/训练师', industry: '科技 / AI', category: 'new',
+    threat: 4.0, augment: 7.0, size: 8, risk: 'new',
+    tagline: '让 AI 更聪明的幕后英雄',
+    tasks: ['训练数据标注', 'RLHF 反馈', '模型行为评估', '数据质量控制', '边缘案例识别'],
+    replaced: '基础标注任务会被半自动化，但高质量人类判断无法替代',
+    moat: '领域专业知识（医疗/法律标注）、文化细节、边缘案例判断',
+    newSkills: ['AI 评估方法论', '领域专业知识深化', 'AI 安全评估', '多语言 / 跨文化标注'],
+    future: '随 AI 训练需求持续增长，但高度依赖主要 AI 公司的战略',
+    salary: '→ 稳定，领域专家型标注师高薪',
+    timeline: [
+      { year: '现在', desc: '随 AI 发展持续增长', color: '#22d3ee' },
+      { year: '2025', desc: '专业标注需求扩大', color: '#22d3ee' },
+      { year: '2026+', desc: '领域专家型主导', color: '#10b981' }
+    ]
+  },
+  {
+    id: 'legal', name: '法务专员', industry: '法律 / 合规', category: 'ops',
+    threat: 5.5, augment: 7.5, size: 11, risk: 'med',
+    tagline: '合同审查 AI 化，但法律判断与风险把控更关键',
+    tasks: ['合同审查', '法律研究', '合规管理', '知识产权', '诉讼支持'],
+    replaced: '标准合同审查、法条检索、合规清单核查、基础文件草拟',
+    moat: '复杂法律判断、谈判策略、客户关系、监管关系、道德判断',
+    newSkills: ['Legal AI 工具（Harvey/Lexis+）', 'AI 合同风险识别', '数据隐私法（AI 监管）', '跨境法务'],
+    future: '初级法务收缩，律所和企业法务走向精英化，AI 监管法律专家需求爆发',
+    salary: '→↑ 高端法务溢价，AI 监管专家极度稀缺',
+    timeline: [
+      { year: '现在', desc: '文件处理 AI 渗透', color: '#22d3ee' },
+      { year: '2025', desc: '合同审查高度自动化', color: '#f59e0b' },
+      { year: '2026+', desc: '精英法律判断稀缺', color: '#10b981' }
+    ]
+  },
+  {
+    id: 'sales', name: '销售经理', industry: '销售 / 商务', category: 'ops',
+    threat: 4.5, augment: 8.5, size: 13, risk: 'low',
+    tagline: '关系型销售无法被 AI 替代，AI 让好销售更好',
+    tasks: ['客户关系维护', '销售机会识别', '提案与谈判', '市场洞察', '团队管理'],
+    replaced: '线索评分与筛选、标准提案生成、跟进邮件撰写、CRM 数据录入',
+    moat: '高信任关系建立、复杂谈判、读懂人心、战略客户规划',
+    newSkills: ['AI CRM（Salesforce Einstein）', '销售情报工具', '数据驱动漏斗分析', '价值销售方法论'],
+    future: '销售效率 3x 提升，优秀销售的产出大幅跃升，普通销售被淘汰',
+    salary: '↑ 顶级销售溢价拉大，AI 赋能者 vs 传统销售分化加剧',
+    timeline: [
+      { year: '现在', desc: 'CRM AI 化普及', color: '#22d3ee' },
+      { year: '2025', desc: '关系销售价值凸显', color: '#a78bfa' },
+      { year: '2026+', desc: '超级销售崛起', color: '#10b981' }
+    ]
+  }
+];
+
+const PATHS = [
+  {
+    label: '防守型 · 稳中求进',
+    who: '不确定未来方向，想先保住当前岗位的职场人',
+    timeframe: '12-18 个月',
+    risk: '低',
+    steps: [
+      {
+        phase: 'MONTH 0-3',
+        title: '认知升级 · 扫清盲区',
+        desc: '系统了解 AI 如何影响你所在行业，识别岗位中哪些任务 AI 已经或将要接管，不逃避，先直视现实。',
+        actions: ['完成行业 AI 影响报告阅读', '用 ChatGPT/Gemini 测试自己日常工作中的 10 个任务', '找 3 位同行聊聊他们的 AI 使用情况', '制作个人「任务威胁清单」']
+      },
+      {
+        phase: 'MONTH 3-9',
+        title: '工具掌握 · 夯实基础',
+        desc: '在现有岗位上深度整合 AI 工具，让你的产出质量和效率明显提升。不是学 AI，而是用 AI 把当前工作做得更好。',
+        actions: ['精通 3-5 个核心 AI 工具（与岗位强相关）', '将日常工作中 30% 的任务 AI 辅助化', '记录 AI 带来的效率提升数据（用于绩效谈判）', '参加至少 1 个 AI 工具社群']
+      },
+      {
+        phase: 'MONTH 9-18',
+        title: '价值重构 · 护城河加固',
+        desc: '明确自己在 AI 无法替代的领域深耕，把人类优势变成可证明、可量化的核心价值。',
+        actions: ['选择 1-2 个「人类护城河」能力深度投入', '承担 AI 赋能相关的团队内培训或分享', '更新简历，突出 AI 增强后的工作成果', '探索内部岗位调整，向 AI 友好型岗位靠近']
+      }
+    ],
+    skills: [
+      { name: 'AI 工具使用', current: 30, target: 75 },
+      { name: '核心业务深度', current: 70, target: 85 },
+      { name: '数据分析', current: 40, target: 60 },
+      { name: '跨团队协作', current: 60, target: 70 },
+      { name: '战略思维', current: 35, target: 50 }
+    ]
+  },
+  {
+    label: '进攻型 · 主动拥抱',
+    who: '有强烈成长意愿，想借 AI 浪潮实现跨越式提升的职场人',
+    timeframe: '6-12 个月',
+    risk: '中',
+    steps: [
+      {
+        phase: 'MONTH 0-2',
+        title: '全面沉浸 · 建立 AI 直觉',
+        desc: '不再把 AI 当工具，而是把它当协作者。高强度使用，建立对 AI 能力边界的第一手感知。',
+        actions: ['订阅 Claude Pro + ChatGPT Plus 双线高强度使用', '参加 AI Hackathon 或构建小型 AI 应用', '阅读 5 份最新 AI + 行业报告', '建立个人 AI 实验日志']
+      },
+      {
+        phase: 'MONTH 2-6',
+        title: '杠杆放大 · 创造超额产出',
+        desc: '用 AI 工具让你在现有岗位上产出是别人的 3-5 倍，用结果说话，建立「AI 领先者」口碑。',
+        actions: ['构建个人 AI 工作流 SOP，并分享给团队', '承担跨部门的 AI 落地项目', '公开输出：写作/演讲关于 AI 的见解', '量化 AI 带来的业务结果（$收入/效率%）']
+      },
+      {
+        phase: 'MONTH 6-12',
+        title: '价值跃升 · 争取市场溢价',
+        desc: '基于前 6 个月的成果，主动寻求薪资提升、晋升或外部更好机会。',
+        actions: ['整理 AI 驱动的项目成果集（Case Studies）', '接触猎头或主动投递 AI 相关职位', '建立行业内 AI 影响者身份（LinkedIn/公众号）', '评估是否转型 AI 原生岗位（AI PM/顾问等）']
+      }
+    ],
+    skills: [
+      { name: 'AI 工具使用', current: 30, target: 92 },
+      { name: '核心业务深度', current: 70, target: 80 },
+      { name: '数据分析', current: 40, target: 78 },
+      { name: '跨团队协作', current: 60, target: 85 },
+      { name: '战略思维', current: 35, target: 75 }
+    ]
+  },
+  {
+    label: '跨越型 · 赛道重构',
+    who: '现有岗位明显高危，或有强烈意愿进入全新 AI 原生赛道的人',
+    timeframe: '12-24 个月',
+    risk: '高',
+    steps: [
+      {
+        phase: 'MONTH 0-3',
+        title: '目标锁定 · 选择新赛道',
+        desc: '理性评估自己的可迁移能力，结合 AI 时代新职位图谱，选定 1 个转型目标赛道。不盲目，先研究。',
+        actions: ['绘制个人「可迁移能力地图」', '深度研究 3 个目标新职位（岗位要求/薪资/路径）', '找到目标赛道内已转型成功的人，约谈访谈', '评估财务缓冲（建议 6-12 个月生活费储备）']
+      },
+      {
+        phase: 'MONTH 3-12',
+        title: '边学边做 · 最小化验证',
+        desc: '不要辞职去学习，而是在不影响当前工作的前提下，开始边缘切入新赛道，积累真实项目经验。',
+        actions: ['系统学习目标领域（Coursera/实战项目）', '承接副业项目，建立新赛道作品集', '加入目标领域社群，建立人脉', '争取内部转岗机会（比外部跳槽风险低）']
+      },
+      {
+        phase: 'MONTH 12-24',
+        title: '全面切换 · 稳住新阵地',
+        desc: '当新赛道的能力和收入信号都达到临界点，执行跨越。切换后的前 6 个月是关键稳定期。',
+        actions: ['以作品集和项目经验为主攻方向，降低学历门槛影响', '入职新赛道后，设定 90 天快速融入计划', '持续更新 AI 工具技能（新赛道也在快速演化）', '反哺：分享自己的转型经验，建立个人品牌']
+      }
+    ],
+    skills: [
+      { name: 'AI 工具使用', current: 30, target: 88 },
+      { name: '目标领域知识', current: 15, target: 70 },
+      { name: '项目管理', current: 50, target: 80 },
+      { name: '自我营销', current: 25, target: 75 },
+      { name: '风险管理', current: 40, target: 72 }
+    ]
+  }
+];
+
+// ============================================================
+// RENDER HEATMAP
+// ============================================================
+function renderHeatmap(filter = 'all') {
+  const svg = document.getElementById('heatmapSvg');
+  svg.innerHTML = '';
+  const W = 620, H = 520;
+  const PAD = { top: 40, right: 30, bottom: 70, left: 70 };
+  const plotW = W - PAD.left - PAD.right;
+  const plotH = H - PAD.top - PAD.bottom;
+
+  const ns = 'http://www.w3.org/2000/svg';
+  const g = (tag, attrs = {}) => {
+    const el = document.createElementNS(ns, tag);
+    Object.entries(attrs).forEach(([k, v]) => el.setAttribute(k, v));
+    return el;
+  };
+  const t = (x, y) => `translate(${x},${y})`;
+
+  const xScale = v => PAD.left + (v / 10) * plotW;
+  const yScale = v => PAD.top + (1 - v / 10) * plotH;
+
+  // Quadrants
+  const qMid = { x: xScale(5), y: yScale(5) };
+  const quads = [
+    { x: PAD.left, y: PAD.top, w: qMid.x - PAD.left, h: qMid.y - PAD.top, cls: 'q-tl' },
+    { x: qMid.x, y: PAD.top, w: W - PAD.right - qMid.x, h: qMid.y - PAD.top, cls: 'q-tr' },
+    { x: PAD.left, y: qMid.y, w: qMid.x - PAD.left, h: H - PAD.bottom - qMid.y, cls: 'q-bl' },
+    { x: qMid.x, y: qMid.y, w: W - PAD.right - qMid.x, h: H - PAD.bottom - qMid.y, cls: 'q-br' }
+  ];
+
+  quads.forEach(q => {
+    svg.appendChild(g('rect', { x: q.x, y: q.y, width: q.w, height: q.h, class: q.cls }));
+  });
+
+  // Grid lines
+  [2, 4, 6, 8].forEach(v => {
+    const xl = g('line', { x1: xScale(v), y1: PAD.top, x2: xScale(v), y2: PAD.top + plotH, class: 'grid-line' });
+    const yl = g('line', { x1: PAD.left, y1: yScale(v), x2: PAD.left + plotW, y2: yScale(v), class: 'grid-line' });
+    svg.appendChild(xl);
+    svg.appendChild(yl);
+  });
+
+  // Center lines
+  const cx = g('line', { x1: qMid.x, y1: PAD.top, x2: qMid.x, y2: PAD.top + plotH, class: 'center-line' });
+  const cy = g('line', { x1: PAD.left, y1: qMid.y, x2: PAD.left + plotW, y2: qMid.y, class: 'center-line' });
+  svg.appendChild(cx); svg.appendChild(cy);
+
+  // Quadrant labels
+  const qlabels = [
+    { label: '核心价值区', x: PAD.left + 10, y: PAD.top + 16 },
+    { label: '转型机会区', x: qMid.x + 10, y: PAD.top + 16 },
+    { label: '稳定区', x: PAD.left + 10, y: PAD.top + plotH - 8 },
+    { label: '高危重构区', x: qMid.x + 10, y: PAD.top + plotH - 8 }
+  ];
+  qlabels.forEach(q => {
+    const el = g('text', { x: q.x, y: q.y, class: 'quadrant-label', 'text-anchor': 'start' });
+    el.textContent = q.label;
+    svg.appendChild(el);
+  });
+
+  // Axis labels
+  for (let i = 0; i <= 10; i += 2) {
+    const xt = g('text', { x: xScale(i), y: H - PAD.bottom + 18, class: 'axis-label', 'text-anchor': 'middle' });
+    xt.textContent = i;
+    svg.appendChild(xt);
+    const yt = g('text', { x: PAD.left - 12, y: yScale(i) + 4, class: 'axis-label', 'text-anchor': 'end' });
+    yt.textContent = i;
+    svg.appendChild(yt);
+  }
+
+  // Axis titles
+  const xTitle = g('text', { x: PAD.left + plotW / 2, y: H - 10, class: 'axis-title', 'text-anchor': 'middle' });
+  xTitle.textContent = 'AI 替代威胁 →';
+  svg.appendChild(xTitle);
+
+  const yTitle = g('text', {
+    x: 16, y: PAD.top + plotH / 2, class: 'axis-title',
+    'text-anchor': 'middle', transform: `rotate(-90, 16, ${PAD.top + plotH / 2})`
+  });
+  yTitle.textContent = 'AI 增强潜力 →';
+  svg.appendChild(yTitle);
+
+  // Dots
+  const colorMap = { high: '#ef4444', med: '#f59e0b', low: '#10b981', new: '#22d3ee' };
+
+  const filteredJobs = filter === 'all' ? JOBS : JOBS.filter(j => j.category === filter);
+
+  filteredJobs.forEach(job => {
+    const cx = xScale(job.threat);
+    const cy = yScale(job.augment);
+    const r = job.size * 0.8;
+    const color = colorMap[job.risk];
+
+    const dotGroup = g('g', { class: 'job-dot', 'data-id': job.id });
+    dotGroup.appendChild(g('circle', {
+      cx, cy, r,
+      fill: color.replace(')', ',0.18)').replace('rgb', 'rgba').replace('#', 'rgba(').split('').map((c, i) => c),
+      style: `fill: ${color}22; stroke: ${color}; stroke-width: 1.5; stroke-opacity: 0.7`
+    }));
+
+    // Label
+    const labelX = cx + r + 4;
+    const labelY = cy + 3;
+    const lbl = g('text', { x: labelX, y: labelY, class: 'job-label', 'text-anchor': 'start' });
+    lbl.textContent = job.name;
+    dotGroup.appendChild(lbl);
+
+    // Tooltip interaction
+    dotGroup.addEventListener('mouseenter', (e) => {
+      const tooltip = document.getElementById('mapTooltip');
+      document.getElementById('ttName').textContent = job.name;
+      document.getElementById('ttThreat').textContent = job.threat + ' / 10';
+      document.getElementById('ttAugment').textContent = job.augment + ' / 10';
+      document.getElementById('ttOutlook').textContent = job.salary;
+      const rect = svg.parentElement.getBoundingClientRect();
+      const svgRect = svg.getBoundingClientRect();
+      const scaleX = svgRect.width / W;
+      const tooltipX = cx * scaleX + svgRect.left - rect.left + 20;
+      const tooltipY = cy * (svgRect.height / H) + svgRect.top - rect.top - 20;
+      tooltip.style.left = Math.min(tooltipX, rect.width - 260) + 'px';
+      tooltip.style.top = Math.max(tooltipY, 10) + 'px';
+      tooltip.classList.add('visible');
+    });
+
+    dotGroup.addEventListener('mouseleave', () => {
+      document.getElementById('mapTooltip').classList.remove('visible');
+    });
+
+    dotGroup.addEventListener('click', () => {
+      openJobDetail(job.id);
+      document.getElementById('jobs').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setTimeout(() => openJobDetail(job.id), 600);
+    });
+
+    svg.appendChild(dotGroup);
+  });
+}
+
+// Filter buttons
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    renderHeatmap(this.dataset.filter);
+  });
+});
+
+// ============================================================
+// RENDER JOB CARDS
+// ============================================================
+function renderJobCards(riskFilter = 'all') {
+  const grid = document.getElementById('jobsGrid');
+  const jobs = riskFilter === 'all' ? JOBS : JOBS.filter(j => j.risk === riskFilter);
+
+  grid.innerHTML = jobs.map(job => `
+    <div class="job-card risk-${job.risk}" data-id="${job.id}" onclick="openJobDetail('${job.id}')">
+      <div class="job-card-header">
+        <div class="job-name">${job.name}</div>
+        <div class="risk-badge badge-${job.risk}">${
+          job.risk === 'high' ? '高危' : job.risk === 'med' ? '转型' : job.risk === 'low' ? '价值' : '新兴'
+        }</div>
+      </div>
+      <div class="threat-bar-wrap">
+        <span class="bar-label">替代威胁</span>
+        <div class="bar-track"><div class="bar-fill bar-threat" style="width:${job.threat*10}%"></div></div>
+        <span class="bar-val">${job.threat}</span>
+      </div>
+      <div class="threat-bar-wrap">
+        <span class="bar-label">增强潜力</span>
+        <div class="bar-track"><div class="bar-fill bar-augment" style="width:${job.augment*10}%"></div></div>
+        <span class="bar-val">${job.augment}</span>
+      </div>
+      <div class="job-card-foot">
+        <span class="job-industry">${job.industry}</span>
+        <span class="expand-hint">展开详情 →</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+// Risk filter
+document.querySelectorAll('.risk-filter').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.risk-filter').forEach(b => {
+      b.className = 'risk-filter';
+    });
+    const risk = this.dataset.risk;
+    this.className = `risk-filter active-${risk}`;
+    renderJobCards(risk);
+  });
+});
+
+// Set initial state
+document.querySelector('.risk-filter[data-risk="all"]').classList.add('active-all');
+
+// ============================================================
+// JOB DETAIL PANEL
+// ============================================================
+function openJobDetail(id) {
+  const job = JOBS.find(j => j.id === id);
+  if (!job) return;
+
+  const colorMap = { high: 'var(--red)', med: 'var(--amber)', low: 'var(--green)', new: 'var(--cyan)' };
+  const color = colorMap[job.risk];
+
+  document.getElementById('panelContent').innerHTML = `
+    <div class="panel-tag">${job.industry} · ${job.risk === 'high' ? '🔴 高危职位' : job.risk === 'med' ? '🟡 转型职位' : job.risk === 'low' ? '🟢 价值职位' : '✦ 新兴职位'}</div>
+    <div class="panel-title" style="color:${color}">${job.name}</div>
+    <div class="panel-subtitle">${job.tagline}</div>
+
+    <div class="hexgrid">
+      <div class="hex-cell">
+        <div class="hex-label"><span class="hex-icon">📋</span>核心任务</div>
+        <div class="hex-content"><ul>${job.tasks.map(t => `<li>${t}</li>`).join('')}</ul></div>
+      </div>
+      <div class="hex-cell">
+        <div class="hex-label"><span class="hex-icon">🤖</span>AI 已替代</div>
+        <div class="hex-content" style="color: var(--red)">${job.replaced}</div>
+      </div>
+      <div class="hex-cell">
+        <div class="hex-label"><span class="hex-icon">🛡️</span>人类护城河</div>
+        <div class="hex-content" style="color: var(--green)">${job.moat}</div>
+      </div>
+      <div class="hex-cell">
+        <div class="hex-label"><span class="hex-icon">⚡</span>新增能力要求</div>
+        <div class="hex-content"><ul>${job.newSkills.map(s => `<li>${s}</li>`).join('')}</ul></div>
+      </div>
+      <div class="hex-cell">
+        <div class="hex-label"><span class="hex-icon">🔭</span>未来职位形态</div>
+        <div class="hex-content"><strong>${job.future}</strong></div>
+      </div>
+      <div class="hex-cell">
+        <div class="hex-label"><span class="hex-icon">💰</span>薪资走势</div>
+        <div class="hex-content" style="color: ${job.salary.includes('↑') ? 'var(--green)' : job.salary.includes('↓') ? 'var(--red)' : 'var(--amber)'}; font-family: var(--mono); font-size: 13px;">
+          ${job.salary}
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-preview">
+      <div class="timeline-label">演化时间线</div>
+      <div class="timeline-track">
+        ${job.timeline.map((tp, i) => `
+          <div class="timeline-point">
+            <div class="tp-dot" style="border-color: ${tp.color}"></div>
+            <div class="tp-year" style="color: ${tp.color}">${tp.year}</div>
+            <div class="tp-desc">${tp.desc}</div>
+          </div>
+          ${i < job.timeline.length - 1 ? '<div class="timeline-line"></div>' : ''}
+        `).join('')}
+      </div>
+    </div>
+
+    <div style="display: flex; gap: 12px; margin-top: 4px;">
+      <div style="flex: 1; padding: 16px; background: var(--card); border: 1px solid var(--border); text-align: center;">
+        <div style="font-family: var(--mono); font-size: 10px; color: var(--text-3); margin-bottom: 6px;">替代威胁指数</div>
+        <div style="font-size: 32px; font-family: var(--serif); font-weight: 700; color: var(--red);">${job.threat}<span style="font-size: 14px; color: var(--text-3)">/10</span></div>
+      </div>
+      <div style="flex: 1; padding: 16px; background: var(--card); border: 1px solid var(--border); text-align: center;">
+        <div style="font-family: var(--mono); font-size: 10px; color: var(--text-3); margin-bottom: 6px;">增强潜力指数</div>
+        <div style="font-size: 32px; font-family: var(--serif); font-weight: 700; color: var(--cyan);">${job.augment}<span style="font-size: 14px; color: var(--text-3)">/10</span></div>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('jobDetailOverlay').classList.add('open');
+}
+
+document.getElementById('panelClose').addEventListener('click', () => {
+  document.getElementById('jobDetailOverlay').classList.remove('open');
+});
+
+document.getElementById('jobDetailOverlay').addEventListener('click', function(e) {
+  if (e.target === this) this.classList.remove('open');
+});
+
+// ============================================================
+// RENDER CAREER PATHS
+// ============================================================
+function renderPaths() {
+  const container = document.getElementById('pathContents');
+  container.innerHTML = PATHS.map((path, i) => `
+    <div class="path-content ${i === 0 ? 'active' : ''}" data-path="${i}">
+      <div class="path-header">
+        <div class="path-meta">
+          <div class="pm-label">适用人群</div>
+          <div class="pm-value" style="font-size: 13px; color: var(--text-2);">${path.who}</div>
+        </div>
+        <div class="path-meta">
+          <div class="pm-label">建议周期</div>
+          <div class="pm-value">${path.timeframe}</div>
+        </div>
+        <div class="path-meta">
+          <div class="pm-label">风险等级</div>
+          <div class="pm-value" style="color: ${path.risk === '低' ? 'var(--green)' : path.risk === '中' ? 'var(--amber)' : 'var(--red)'}">${path.risk}</div>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px;">
+        <div class="roadmap">
+          ${path.steps.map((step, si) => `
+            <div class="roadmap-step">
+              <div class="rs-phase">${step.phase}</div>
+              <div class="rs-title">${step.title}</div>
+              <div class="rs-desc">${step.desc}</div>
+              <div class="rs-actions">
+                ${step.actions.map(a => `<span class="action-chip">${a}</span>`).join('')}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+
+        <div>
+          <div style="font-family: var(--mono); font-size: 10px; color: var(--text-3); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 20px;">能力跃升目标</div>
+          <div class="radar-skills">
+            ${path.skills.map(s => `
+              <div class="radar-skill-row">
+                <span class="rsr-label">${s.name}</span>
+                <div class="rsr-bar" style="background: rgba(255,255,255,0.06);">
+                  <div class="rsr-fill" style="width: ${s.target}%; background: var(--cyan);"></div>
+                </div>
+                <span class="rsr-val">${s.current}→${s.target}</span>
+              </div>
+            `).join('')}
+          </div>
+
+          <div style="margin-top: 40px; padding: 20px; background: var(--card); border: 1px solid var(--border);">
+            <div style="font-family: var(--mono); font-size: 10px; color: var(--text-3); letter-spacing: 0.15em; margin-bottom: 12px;">核心心法</div>
+            <div style="font-size: 13px; color: var(--text-2); line-height: 1.8;">
+              ${i === 0 ? '不要和 AI 赛跑，选择和它并行。先在 AI 无法替代的领域加深根基，再稳步将工具整合进日常，用渐进而非剧烈的方式完成转型。' :
+                i === 1 ? 'AI 时代最大的红利属于「先行者」。在同龄人还在观望的时候，你已经跑出了 3-5 倍的产出差距。这个差距会成为你最强的护城河。' :
+                '跨赛道不是逃跑，是战略性重新布局。关键是识别自己真正可迁移的核心能力，而不是把过去的「职位标签」带进新世界。'}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// Path tabs
+document.querySelectorAll('.path-tab').forEach(tab => {
+  tab.addEventListener('click', function() {
+    const idx = this.dataset.path;
+    document.querySelectorAll('.path-tab').forEach(t => t.classList.remove('active'));
+    this.classList.add('active');
+    document.querySelectorAll('.path-content').forEach(c => c.classList.remove('active'));
+    document.querySelector(`.path-content[data-path="${idx}"]`).classList.add('active');
+  });
+});
+
+// ============================================================
+// INIT
+// ============================================================
+renderHeatmap();
+renderJobCards();
+renderPaths();
+
+// Scroll-based animation for job cards
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.opacity = '1';
+      e.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.1 });
+
+setTimeout(() => {
+  document.querySelectorAll('.job-card').forEach((card, i) => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(16px)';
+    card.style.transition = `opacity 0.4s ${i * 0.03}s, transform 0.4s ${i * 0.03}s`;
+    observer.observe(card);
+  });
+}, 100);
+</script>
+</body>
+</html>
