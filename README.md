@@ -3,7 +3,6 @@
 > 一张交互式全景图，追踪人类商业文明中职业的诞生、演化、融合与消亡。
 >
 🔗访问链接： [Evolution Map of Vocational Abilities in the AI Era](https://siryzhang.github.io/Evolution-Map-of-Vocational-Abilities-in-the-AI-Era/)
----
 
 ## 关于这个项目
 
