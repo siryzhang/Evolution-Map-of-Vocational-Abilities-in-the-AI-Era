@@ -98,14 +98,7 @@ AI时代职业演化全景图谱.html   ~130 KB
 
 ## 使用方式
 
-直接下载 HTML 文件，用浏览器打开即可，无需安装任何依赖：
-
-```bash
-git clone https://github.com/your-username/your-repo-name.git
-open AI时代职业演化全景图谱.html
-```
-
-或通过 GitHub Pages 在线访问（见顶部链接）。
+点击链接访问：https://siryzhang.github.io/Evolution-Map-of-Vocational-Abilities-in-the-AI-Era/
 
 ---
 
@@ -121,8 +114,8 @@ open AI时代职业演化全景图谱.html
 
 ## 版本
 
-`v1.0` · 2025 · 持续迭代中
+`v1.0` · 2026 · 持续迭代中
 
 ---
 
-*数据基于 2024—2025 年研究，AI 时代部分为基于历史规律的前瞻性推演，非最终预测。*
+*数据基于 2025 年研究，AI 时代部分为基于历史规律的前瞻性推演，非最终预测。*
